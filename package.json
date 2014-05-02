@@ -1,0 +1,26 @@
+{
+  "name": "virgilio",
+  "version": "0.0.1",
+  "description": "virgilio ========",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/icemobilelab/virgilio.git"
+  },
+  "author": "",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/icemobilelab/virgilio/issues"
+  },
+  "homepage": "https://github.com/icemobilelab/virgilio",
+  "dependencies": {
+    "bluebird": "^1.2.4",
+    "bunyan": "^0.22.3"
+  }
+}
