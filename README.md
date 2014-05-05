@@ -1,4 +1,6 @@
 # Virgilio
+[![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png)](https://waffle.io/icemobilelab/virgilio)
+
 Virgilio is a minimalist library for helping you write modular applications.
 
 ## Getting started
