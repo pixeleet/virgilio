@@ -1,5 +1,5 @@
 var Virgilio = require('../../');
-var virgilio = new Virgilio()
-    .use('virgilio-http')
+module.exports = new Virgilio()
+    .use('http')
     .loadModule(require('./fruit'))
     .loadModule(require('./fruitSalad'));

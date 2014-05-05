@@ -1,4 +1,4 @@
 var options = {};
 module.exports = require('../../')(options)
-    .use('virgilio-http')
+    .use('http')
     .loadModule(require('./number'));
