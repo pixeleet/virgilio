@@ -9,7 +9,11 @@ var fruitModule = function(options) {
             return fruits.slice(0);
         })
         .defineAction('find', function(fruitId) {
-            return fruits[fruitId];
+            var fruit = fruits[fruitId];
+            if (!fruit) {
+                throw new Error('No fruit with index: ' + fruitId);
+            }
+            return fruit;
         })
         .defineAction('create', function(fruit) {
             if (fruits.indexOf(fruit) === -1) {
@@ -23,6 +27,30 @@ var fruitModule = function(options) {
             }
             delete fruits[fruitIndex];
         });
+
+    virgilio
+        .http({
+            '/fruit': {
+                'GET': 'fruit.findAll',
+                'POST': 'fruit.create',
+                '/:id': {
+                    'DEL': 'fruit.delete',
+                    'GET': {
+                        handler: 'fruit.find',
+                        transform: function(req) {
+                            return [req.params.id];
+                        },
+                        respond: function(response, res) {
+                            res.send(200, response.toUpperCase());
+                        },
+                        error: function(err, res) {
+                            res.send(404, 'Fruit not found.');
+                        }
+                    }
+                }
+            }
+        });
+
 };
 
 var fruitSaladModule = function(options) {
@@ -45,8 +73,10 @@ var fruitSaladModule = function(options) {
 
 var Virgilio = require('../');
 var app = new Virgilio();
-app.loadModule(fruitModule);
-app.loadModule(fruitSaladModule);
+app
+    .use('virgilio-http')
+    .loadModule(fruitModule)
+    .loadModule(fruitSaladModule);
 
 // tests
 var assert = require('assert');

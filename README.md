@@ -2,7 +2,6 @@
 Virgilio is a minimalist library for helping you write modular applications.
 
 ## Getting started
-
 The following creates a Virglio instance and tells it to load the foo module and a custom foo-module.
 
 	var options = {};
