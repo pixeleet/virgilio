@@ -26,24 +26,4 @@ module.exports = function(options) {
             }
             delete fruits[fruitIndex];
         });
-
-    virgilio
-        .http({
-            '/fruit': {
-                'GET': 'fruit.findAll',
-                'POST': 'fruit.create',
-                '/:id': {
-                    'DEL': 'fruit.delete',
-                    'GET': {
-                        handler: 'fruit.find',
-                        respond: function(response, res) {
-                            res.send(200, response.toUpperCase());
-                        },
-                        error: function(err, res) {
-                            res.send(404, 'Fruit not found.');
-                        }
-                    }
-                }
-            }
-        });
 };
