@@ -67,7 +67,7 @@ as:
 		.defineAction('run')
 		.defineAction('stop');
 
-# virgilio.log
+### virgilio.log
 A bunyan instance to use for logging. For instance:
 
 	virgilio.log.info('Everything running smoothly!');
