@@ -37,9 +37,6 @@ var fruitModule = function(options) {
                     'DEL': 'fruit.delete',
                     'GET': {
                         handler: 'fruit.find',
-                        transform: function(req) {
-                            return [req.params.id];
-                        },
                         respond: function(response, res) {
                             res.send(200, response.toUpperCase());
                         },
