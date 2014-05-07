@@ -38,10 +38,10 @@ node_modules
 *.sass-cache
 
 # Build
-build/*
+build
 
 # Documentation
-docs/*
+docs
 
 # SublimeText project files
 *.sublime-workspace
