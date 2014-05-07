@@ -4,16 +4,15 @@
 Virgilio is a minimalist library for helping you write modular applications.
 
 ## Getting started
-The following creates a Virglio instance and tells it to load the foo module and a custom foo-module.
+The following creates a Virglio instance and tells it to load the number module.
 
     var options = {};
     require('virgilio')(options)
-        .use('foo')
-        .loadModule('number');
+        .loadModule(number);
 
 Below is an example of what a number module might look like.
 
-    module.exports = function(options) {
+    function number(options) {
         var virgilio = this;
         virgilio.namespace('number')
             .defineAction('add', add)
@@ -42,11 +41,6 @@ Create a virgilio instance. The optional options object is shared among all regi
 
 ### modulesvirgilio.loadModule( module )
 Load a module. A virgilio module is a function that takes a single options argument. The function is bound to the virgilio instance and instantly called.
-
-### virgilio.use( name )
-Use an extension. Name is the name of the extension (npm package), without the 'virgilio-'. So to use the virgilio-http extension, npm install it and then call:
-
-    virgilio.use('http');
 
 ### virgilio.defineAction( actionName, actionHandler )
 Register an action with virgilio. The `actionName` is automatically scoped to the namespace it was called from.
