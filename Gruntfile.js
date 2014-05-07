@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                     reporter: 'spec',
                     require: 'must'
                 },
-                src: ['./examples/**/*.test.js']
+                src: ['./examples/**/*.test.js', './tests/**/*.test.js']
             }
         },
         docco: {

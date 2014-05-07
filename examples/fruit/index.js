@@ -13,6 +13,13 @@
 // limitations under the License.
 
 var Virgilio = require('../../');
-module.exports = new Virgilio()
+var options = {
+    //Don't log anything (it's annoying when runnig tests).
+    logger: {
+        name: 'virgilio',
+        streams: []
+    }
+};
+module.exports = new Virgilio(options)
     .loadModule(require('./fruit'))
     .loadModule(require('./fruitSalad'));
