@@ -18,24 +18,33 @@ var Virgilio = require('../');
 describe('Vergilio.prototype.joinPaths$()', function() {
     var joinPaths = Virgilio.prototype.joinPaths$;
     var testCases = [{
-        basePath: ['a', 'b'],
-        relPath: ['c', 'd'],
-        joinPath: ['a', 'b', 'c', 'd']
+        basePath: 'a.b',
+        relPath: 'c.d',
+        joinPath: 'a.b.c.d'
     }, {
-        basePath: ['a', 'b'],
-        relPath: ['b', 'd'],
-        joinPath: ['a', 'b', 'd']
+        basePath: 'a.b',
+        relPath: 'b.d',
+        joinPath: 'a.b.d'
     }, {
-        basePath: ['a', 'b'],
-        relPath: ['a', 'd'],
-        joinPath: ['a', 'd']
+        basePath: 'a.b',
+        relPath: 'a.d',
+        joinPath: 'a.d'
+    }, {
+        basePath: void(0),
+        relPath: 'a.b',
+        joinPath: 'a.b'
+    }, {
+        basePath: void(0),
+        relPath: void(0),
+        joinPath: ''
     }];
 
     testCases.forEach(function(testCase) {
         var basePath = testCase.basePath;
         var relPath = testCase.relPath;
         var joinPath = testCase.joinPath;
-        it('correctly joins path ' + basePath + ' with ' + relPath, function() {
+        it('joins path `' + basePath + '` with `' + relPath + '` into `' +
+                    joinPath + '`', function() {
             var result = joinPaths(basePath, relPath);
             result.must.eql(joinPath);
         });
