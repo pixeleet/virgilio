@@ -21,7 +21,7 @@ describe('fruit tests', function() {
         var test = function() {
             virgilio.loadModule('foobar');
         };
-        test.must.throw();
+        test.must.throw(virgilio.InvalidModuleError);
     });
 
     describe('calling actions', function() {
@@ -76,7 +76,7 @@ describe('fruit tests', function() {
                     function(done) {
             virgilio.execute('fruit.eat', 'apple')
                 .catch(function(err) {
-                    err.must.not.be.undefined();
+                    err.must.be.instanceof(virgilio.NotAnActionError);
                     done();
                 }).done();
         });
