@@ -1,5 +1,25 @@
 box: wercker/nodejs
 build:
   steps:
+    - script:
+        name: Install grunt
+        code: |
+          npm install -g grunt-cli
+
     - npm-install
     - npm-test
+deploy :
+  steps :
+    - script:
+        name: Configure git
+        code: |-
+          git config --global user.email "pleasemailus@wercker.com"
+          git config --global user.name "wercker"
+          rm -rf .git
+    - script:
+        name: Deploy to github pages
+        code: |-
+          git init
+          git add .
+          git commit -m "deploy commit from $WERCKER_STARTED_BY"
+          git push -f $GIT_REMOTE master:gh-pages
