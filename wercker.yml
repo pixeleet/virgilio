@@ -4,7 +4,7 @@ build:
     - script:
         name: Install grunt
         code: |
-          npm install -g grunt-cli
+          sudo npm install -g grunt-cli
 
     - npm-install
     - npm-test
