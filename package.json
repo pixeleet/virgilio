@@ -1,7 +1,7 @@
 {
   "name": "virgilio",
-  "version": "0.0.1",
-  "description": "virgilio ========",
+  "version": "0.1.0",
+  "description": "Virgilio, the next generation module bus",
   "main": "index.js",
   "directories": {
     "example": "examples"
@@ -13,8 +13,13 @@
     "type": "git",
     "url": "git://github.com/icemobilelab/virgilio.git"
   },
-  "author": "",
-  "license": "Apache",
+  "author": "Icemobile BV",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://github.com/icemobilelab/caronte/raw/master/LICENSE"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/icemobilelab/virgilio/issues"
   },
