@@ -1,5 +1,5 @@
 # Virgilio
-[![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png)](https://waffle.io/icemobilelab/virgilio)
+[![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png)](https://waffle.io/icemobilelab/virgilio) [![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
 
 Virgilio is a minimalist library for helping you write modular applications.
 
