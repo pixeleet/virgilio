@@ -7,7 +7,7 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -29,10 +29,11 @@
     "bunyan": "^0.22.3"
   },
   "devDependencies": {
-    "grunt": "^0.4.4",
-    "grunt-docco": "^0.3.3",
-    "grunt-mocha-test": "^0.10.2",
     "mocha": "^1.18.2",
-    "must": "^0.11.0"
+    "must": "^0.11.0",
+    "gulp": "^3.6.2",
+    "gulp-mocha": "^0.4.1",
+    "gulp-help": "^0.1.6",
+    "gulp-docco": "0.0.4"
   }
 }

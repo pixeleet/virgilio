@@ -89,11 +89,12 @@ Virgilio itself reads only the logger property:
 
 To see what options the logger supports, check out the bunyan documentation.
 
-## Grunt
-The Virgilio project comes with a couple of grunt tasks:
+## Gulp
+The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:
 
-- `grunt test` runs all tests.
-- `grunt docs` generates the annotated sourcecode webpage in the `docs/` directory.
+- `gulp help` generate a fancy help message
+- `gulp test` runs all tests.
+- `gulp docs` generates the annotated sourcecode webpage in the `docs/` directory.
 
 
 
