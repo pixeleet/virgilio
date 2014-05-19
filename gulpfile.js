@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
-    docco = require('gulp-docco');
+    docco = require('gulp-docco'),
+    jshint = require('gulp-jshint');
 
 // Help module
 require('gulp-help')(gulp);
@@ -18,4 +19,10 @@ gulp.task('docs', 'Build the documentation', function () {
     gulp.src(['lib/virgilio.js'])
         .pipe(docco())
         .pipe(gulp.dest('./docs'));
+});
+
+gulp.task('lint', 'Execute JSHint checks on the code', function () {
+    gulp.src(['lib/*.js'])
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('jshint-stylish'));
 });
