@@ -14,7 +14,7 @@
 
 /* global describe, it*/
 var Promise = require('bluebird');
-var virgilio = require('../');
+var virgilio = require('./');
 
 describe('fruit tests', function() {
 

@@ -42,7 +42,7 @@ Then somewhere else, you might call:
 Create a virgilio instance.
 The optional options object is shared among all registered modules.
 
-### modulesvirgilio.loadModule( module )
+### virgilio.loadModule( module )
 Load a module.
 A virgilio module is a function that takes a single options argument.
 The function is bound to the virgilio instance and instantly called.
@@ -56,6 +56,14 @@ Execute an action with certain arguments.
 `actionName` is automatically scoped to the namespace it was called from.
 
 `execute` always returns a promise for the result of the action, even if the action itself directly returns a value!
+
+### virgilio.subscribe( actionName, handler )
+Register a subscriber with virgilio.
+A subscriber is like an action, but passive: it does not return a value.
+You can safely have multiple subscribers for the same action name (but only a single action).
+
+### virgilio.publish( actionName [, arg1, arg2, ...])
+Like `virgilio.execute()`, apart from the fact that publish won't return a value.
 
 ### virgilio.namespace( name )
 Get a reference to a certain namespace.
