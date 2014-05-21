@@ -1,6 +1,6 @@
 {
   "name": "virgilio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Virgilio, the next generation module bus",
   "main": "index.js",
   "directories": {
