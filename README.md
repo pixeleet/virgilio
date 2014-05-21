@@ -56,6 +56,14 @@ Execute an action with certain arguments.
 `actionName` is automatically scoped to the namespace it was called from.
 
 `execute` always returns a promise for the result of the action, even if the action itself directly returns a value!
+If nothing responds within 100ms, this promise is rejected with a TimeoutError.
+If you want to wait for longer, you can specify your own timeout:
+
+    virgilio.execute('foo')
+        .withTimeout(2000) //Wait for 2 seconds before failing.
+        .then( ... );
+
+Make sure you chain `withTimeout` directly after the execute call.
 
 ### virgilio.subscribe( actionName, handler )
 Register a subscriber with virgilio.
