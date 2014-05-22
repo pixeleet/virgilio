@@ -100,10 +100,13 @@ The options object passed to Virgilio is shared with all modules and can thus be
 Virgilio itself reads only the logger property:
 
     var options = {
-        logger: { level: 10, name: 'virgilio' } //defaults
+        logger: { level: 10, name: 'virgilio' }, //defaults
+        timeout: 1000 //default
     }
 
 To see what options the logger supports, check out the bunyan documentation.
+
+The `timeout` options determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
 
 ## Gulp
 The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:

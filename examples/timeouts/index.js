@@ -18,7 +18,8 @@ var options = {
     logger: {
         name: 'virgilio',
         streams: []
-    }
+    },
+    timeout: 100
 };
 module.exports = new Virgilio(options)
     .loadModule(require('./remindme'));

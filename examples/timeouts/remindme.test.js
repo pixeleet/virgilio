@@ -20,6 +20,9 @@ describe('remindme tests', function() {
 
     it('returns a rejected promise if it has to wait to long', function(done) {
         virgilio.execute('remindMe', 200)
+            .then(function(response) {
+                done(new Error('Promise wasn\'t rejected.'));
+            })
             .catch(function(error) {
                 error.must.be.instanceof(Promise.TimeoutError);
                 done();
