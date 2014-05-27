@@ -12,6 +12,9 @@ gulp.task('test', 'Run the application tests', function () {
         .pipe(mocha({
             reporter: 'spec'
         }))
+        .on('error', function(err) {
+            throw err;
+        })
         .once('end', function() {
             process.exit();
         });
