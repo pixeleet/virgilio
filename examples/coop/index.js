@@ -15,11 +15,11 @@
 var Virgilio = require('../../');
 var options = {
     //Don't log anything (it's annoying when runnig tests).
-    // logger: {
-    //     name: 'virgilio',
-    //     streams: []
-    // },
-    timeout: 100
+    logger: {
+        name: 'virgilio',
+        streams: []
+    },
+    passThrough: false
 };
 
 var coop1 = new Virgilio(options);
@@ -27,7 +27,9 @@ var coop1 = new Virgilio(options);
 var coop2 = new Virgilio(options)
     .loadModule(require('./coop'));
 
+coop1.mediator$.pipe(coop1.mediator$);
 coop1.mediator$.pipe(coop2.mediator$);
 coop2.mediator$.pipe(coop1.mediator$);
+coop2.mediator$.pipe(coop2.mediator$);
 
 module.exports = coop2;
