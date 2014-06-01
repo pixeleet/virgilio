@@ -31,6 +31,8 @@ deploy:
           gulp docs
           cd docs
           mv virgilio.html index.html
+          git config --global user.email $GITHUB_EMAIL
+          git config --global user.name 'IcemobileLab'
           git init
           git add .
           git commit -m "Publishing annotated source code."
