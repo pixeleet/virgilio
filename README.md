@@ -116,5 +116,4 @@ The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:
 - `gulp docs` generates the annotated sourcecode webpage in the `docs/` directory.
 
 
-
 We dedicate this Library to the ServiceRegistrar, the EigenServices and the PuppetDresser.
