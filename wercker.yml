@@ -21,3 +21,13 @@ deploy:
         token: $HIPCHAT_TOKEN
         room-id: $HIPCHAT_ROOM_ID
         from-name: $HIPCHAT_FROM
+    - script:
+        name: publish docs
+        code: |-
+          gulp docs
+          cd docs
+          mv virgilio.html index.html
+          git init
+          git add .
+          git commit -m "Publishing annotated source code."
+          git push --force $GIT_REMOTE master:gh-pages
