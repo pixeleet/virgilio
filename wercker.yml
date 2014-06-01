@@ -36,4 +36,4 @@ deploy:
           git init
           git add .
           git commit -m "Publishing annotated source code."
-          git push --force $GIT_REMOTE master:gh-pages
+          git push --force $GITHUB_REMOTE master:gh-pages
