@@ -21,6 +21,10 @@ deploy:
         token: $HIPCHAT_TOKEN
         room-id: $HIPCHAT_ROOM_ID
         from-name: $HIPCHAT_FROM
+    - npm-install
+    - script:
+        name: install gulp globally
+        code: sudo npm install -g gulp
     - script:
         name: publish docs
         code: |-
