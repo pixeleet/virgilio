@@ -3,6 +3,11 @@ build:
   steps:
     - npm-install
     - npm-test
+  after-steps:
+    - hipchat-notify:
+        token: $HIPCHAT_TOKEN
+        room-id: $HIPCHAT_ROOM_ID
+        from-name: $HIPCHAT_FROM
 deploy:
   steps:
     - script:
@@ -11,3 +16,8 @@ deploy:
     - script:
         name: npm publish
         code: npm publish
+  after-steps:
+    - hipchat-notify:
+        token: $HIPCHAT_TOKEN
+        room-id: $HIPCHAT_ROOM_ID
+        from-name: $HIPCHAT_FROM
