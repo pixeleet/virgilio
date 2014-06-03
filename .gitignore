@@ -43,6 +43,9 @@ build
 # Documentation
 docs
 
+# Coverage
+coverage
+
 # SublimeText project files
 *.sublime-workspace
 

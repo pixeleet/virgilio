@@ -113,6 +113,7 @@ The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:
 
 - `gulp help` generate a fancy help message
 - `gulp test` runs all tests.
+- `gulp coverage` create the code coverage report in the `coverage/` directory.
 - `gulp docs` generates the annotated sourcecode webpage in the `docs/` directory.
 
 

@@ -1,0 +1,7 @@
+{
+    "passfail": false,          // Stop on first error.
+    "maxerr": 100,              // Maximum error before stopping.
+    // Env
+    "browser": false,           // Standard browser globals e.g. `window`, `document`.
+    "node": true               // Node env
+}
