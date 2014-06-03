@@ -12,19 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var net = require('net');
+var fs = require('fs');
+var es = require('event-stream');
+
+//Set up Virgilio.
 var Virgilio = require('../../');
 var options = {
     //Don't log anything (it's annoying when runnig tests).
     logger: {
         name: 'virgilio',
         streams: []
-    }
+    },
+    passThrough: false
 };
-
 var virgilio = new Virgilio(options);
 
-var child = require('child_process').fork('./fork', { silent: true });
-virgilio.mediator$.pipe(child.stdin);
-child.stdout.pipe(virgilio.mediator$);
+//Set up socket.
+var socketPath = '/tmp/virgilio.sock';
+if (fs.existsSync(socketPath)) {
+    fs.unlinkSync(socketPath);
+}
+net.createServer(function()).listen(socketPath);
+var socket = net.connect(socketPath);
+
+//Set up forked process.
+require('child_process').fork(require.resolve('./fork'));
+
+//Pipe communication to the socket.
+virgilio.mediator$
+    .pipe(es.mapSync(function(data) {
+        return JSON.stringify(data);
+    }))
+    .pipe(socket);
+
+socket
+    .pipe(es.mapSync(function(data) {
+        return JSON.parse(data);
+    }))
+    .pipe(virgilio.mediator$);
 
 module.exports = virgilio;

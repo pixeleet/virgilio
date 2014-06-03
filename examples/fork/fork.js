@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var net = require('net');
+var es = require('event-stream');
+
+//Set up Virgilio.
 var Virgilio = require('../../');
 var options = {
     //Don't log anything (it's annoying when runnig tests).
@@ -21,10 +25,23 @@ var options = {
     },
     passThrough: false
 };
-
 var virgilio = new Virgilio(options);
-process.stdin.pipe(virgilio.mediator$);
-virgilio.mediator$.pipe(process.stdout);
+
+//Pipe communication to the socket created by the master process.
+var socket = net.connect('/tmp/virgilio.sock');
+
+socket
+    .pipe(es.mapSync(function(data) {
+        console.log('FOOOOOOO');
+        return JSON.parse(data);
+    }))
+    .pipe(virgilio.mediator$);
+
+virgilio.mediator$
+    .pipe(es.mapSync(function(data) {
+        return JSON.stringify(data);
+    }))
+    .pipe(socket);
 
 virgilio
     .defineAction('increment', increment);
