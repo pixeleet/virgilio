@@ -13,7 +13,8 @@
 // limitations under the License.
 
 /* global describe, it*/
-var virgilio = require('../');
+var Promise = require('bluebird');
+var virgilio = require('./');
 
 describe('fruit tests', function() {
 
@@ -76,7 +77,7 @@ describe('fruit tests', function() {
                     function(done) {
             virgilio.execute('fruit.eat', 'apple')
                 .catch(function(err) {
-                    err.must.be.instanceof(virgilio.NotAnActionError);
+                    err.must.be.instanceof(Promise.TimeoutError);
                     done();
                 }).done();
         });

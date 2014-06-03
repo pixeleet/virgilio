@@ -1,7 +1,7 @@
 <a href="https://github.com/icemobilelab/virgilio"><img src="https://raw.githubusercontent.com/icemobilelab/virgilio/master/images/virgilio.png" align="center"  height="300" width="600"/></a>
 
 # Virgilio
-[![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png)](https://waffle.io/icemobilelab/virgilio) [![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
+[![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png?label=ready&title=Ready)](https://waffle.io/icemobilelab/virgilio) [![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
 
 Virgilio is a minimalist library for helping you write modular applications.
 
@@ -42,7 +42,7 @@ Then somewhere else, you might call:
 Create a virgilio instance.
 The optional options object is shared among all registered modules.
 
-### modulesvirgilio.loadModule( module )
+### virgilio.loadModule( module )
 Load a module.
 A virgilio module is a function that takes a single options argument.
 The function is bound to the virgilio instance and instantly called.
@@ -56,6 +56,22 @@ Execute an action with certain arguments.
 `actionName` is automatically scoped to the namespace it was called from.
 
 `execute` always returns a promise for the result of the action, even if the action itself directly returns a value!
+If nothing responds within 100ms, this promise is rejected with a TimeoutError.
+If you want to wait for longer, you can specify your own timeout:
+
+    virgilio.execute('foo')
+        .withTimeout(2000) //Wait for 2 seconds before failing.
+        .then( ... );
+
+Make sure you chain `withTimeout` directly after the execute call.
+
+### virgilio.subscribe( actionName, handler )
+Register a subscriber with virgilio.
+A subscriber is like an action, but passive: it does not return a value.
+You can safely have multiple subscribers for the same action name (but only a single action).
+
+### virgilio.publish( actionName [, arg1, arg2, ...])
+Like `virgilio.execute()`, apart from the fact that publish won't return a value.
 
 ### virgilio.namespace( name )
 Get a reference to a certain namespace.
@@ -84,10 +100,13 @@ The options object passed to Virgilio is shared with all modules and can thus be
 Virgilio itself reads only the logger property:
 
     var options = {
-        logger: { level: 10, name: 'virgilio' } //defaults
+        logger: { level: 10, name: 'virgilio' }, //defaults
+        timeout: 1000 //default
     }
 
 To see what options the logger supports, check out the bunyan documentation.
+
+The `timeout` options determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
 
 ## Gulp
 The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:

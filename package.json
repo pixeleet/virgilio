@@ -1,6 +1,6 @@
 {
   "name": "virgilio",
-  "version": "0.1.0",
+  "version": "0.2.4",
   "description": "Virgilio, the next generation module bus",
   "main": "index.js",
   "directories": {
@@ -26,7 +26,8 @@
   "homepage": "https://github.com/icemobilelab/virgilio",
   "dependencies": {
     "bluebird": "^1.2.4",
-    "bunyan": "^0.22.3"
+    "bunyan": "^0.22.3",
+    "node-uuid": "^1.4.1"
   },
   "devDependencies": {
     "mocha": "^1.18.2",

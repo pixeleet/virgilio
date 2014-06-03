@@ -1,0 +1,5 @@
+wercker.yml
+examples/
+docs/
+images/
+gulpfile.js
