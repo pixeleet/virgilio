@@ -6,7 +6,7 @@ build:
     - script:
         name: check code coverage
         code: |-
-            npm install -g codeclimate-test-reporter
+            sudo npm install -g codeclimate-test-reporter
             gulp coverage
             codeclimate < coverage/lcov.info
   after-steps:
