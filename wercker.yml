@@ -3,6 +3,12 @@ build:
   steps:
     - npm-install
     - npm-test
+    - script:
+        name: check code coverage
+        code: |-
+            npm install -g codeclimate-test-reporter
+            gulp coverage
+            codeclimate < coverage/lcov.info
   after-steps:
     - hipchat-notify:
         token: $HIPCHAT_TOKEN
