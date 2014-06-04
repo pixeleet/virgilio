@@ -3,13 +3,6 @@ build:
   steps:
     - npm-install
     - npm-test
-    - script:
-        name: check code coverage
-        code: |-
-            sudo npm install -g gulp
-            sudo npm install -g codeclimate-test-reporter
-            gulp coverage
-            codeclimate < coverage/lcov.info
   after-steps:
     - hipchat-notify:
         token: $HIPCHAT_TOKEN
@@ -44,3 +37,9 @@ deploy:
           git add .
           git commit -m "Publishing annotated source code."
           git push --force $GITHUB_REMOTE master:gh-pages
+    - script:
+        name: check code coverage
+        code: |-
+            gulp coverage
+            sudo npm install -g codeclimate-test-reporter
+            codeclimate < coverage/lcov.info
