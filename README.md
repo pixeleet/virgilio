@@ -1,7 +1,7 @@
 <a href="https://github.com/icemobilelab/virgilio"><img src="https://raw.githubusercontent.com/icemobilelab/virgilio/master/images/virgilio.png" align="center"  height="300" width="600"/></a>
 
 # Virgilio
-[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558) [![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png?label=ready&title=Ready)](https://waffle.io/icemobilelab/virgilio)
+[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558) [![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio/coverage.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png?label=ready&title=Ready)](https://waffle.io/icemobilelab/virgilio)
 
 Virgilio is a minimalist library for helping you write modular applications.
 
