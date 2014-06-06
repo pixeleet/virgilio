@@ -15,9 +15,23 @@
 /* global describe, it*/
 var virgilio = require('./');
 
+before(function(done) {
+    //Virgilio starts forks, which take a time to start up.
+    //Give the process some time before running the tests.
+    setTimeout(done, 300);
+});
+
 describe('fork tests', function() {
 
-    it('calls an action on a different virgilio process', function(done) {
+    it('calls an action on a different process', function(done) {
+        virgilio.execute('increment', 41)
+            .then(function(response) {
+                response.must.equal(42);
+                done();
+            }).done();
+    });
+
+    it('calls a failing action on a different process', function(done) {
         virgilio.execute('increment', 41)
             .then(function(response) {
                 response.must.equal(42);

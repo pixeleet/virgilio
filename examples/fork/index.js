@@ -13,8 +13,8 @@
 // limitations under the License.
 
 var net = require('net');
-var fs = require('fs');
 var es = require('event-stream');
+var childProcess = require('child_process');
 
 //Set up Virgilio.
 var Virgilio = require('../../');
@@ -28,28 +28,32 @@ var options = {
 };
 var virgilio = new Virgilio(options);
 
-//Set up socket.
-var socketPath = '/tmp/virgilio.sock';
-if (fs.existsSync(socketPath)) {
-    fs.unlinkSync(socketPath);
+//Set up the queue.
+var queue = childProcess.fork(require.resolve('./queue'));
+
+//Give the queue a time to start before connecting to it.
+setTimeout(whenQueueIsUp, 100);
+function whenQueueIsUp() {
+    //Set up forked process.
+    var fork = childProcess.fork(require.resolve('./fork'));
+
+    //Kill everything when we exit.
+    process.on('exit', function(code) {
+        queue.kill(code);
+        fork.kill(code);
+    });
+
+    //Pipe communication to and fromt he socket.
+    var socket = net.connect('/tmp/virgilio.sock');
+    socket
+        .pipe(es.split())
+        .pipe(es.parse())
+        .pipe(virgilio.mediator$)
+        .pipe(es.stringify())
+        .pipe(es.mapSync(function(data) {
+            return data + '\n';
+        }))
+        .pipe(socket);
 }
-net.createServer(function()).listen(socketPath);
-var socket = net.connect(socketPath);
-
-//Set up forked process.
-require('child_process').fork(require.resolve('./fork'));
-
-//Pipe communication to the socket.
-virgilio.mediator$
-    .pipe(es.mapSync(function(data) {
-        return JSON.stringify(data);
-    }))
-    .pipe(socket);
-
-socket
-    .pipe(es.mapSync(function(data) {
-        return JSON.parse(data);
-    }))
-    .pipe(virgilio.mediator$);
 
 module.exports = virgilio;

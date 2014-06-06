@@ -31,21 +31,23 @@ var virgilio = new Virgilio(options);
 var socket = net.connect('/tmp/virgilio.sock');
 
 socket
+    .pipe(es.split())
+    .pipe(es.parse())
+    .pipe(virgilio.mediator$)
+    .pipe(es.stringify())
     .pipe(es.mapSync(function(data) {
-        console.log('FOOOOOOO');
-        return JSON.parse(data);
-    }))
-    .pipe(virgilio.mediator$);
-
-virgilio.mediator$
-    .pipe(es.mapSync(function(data) {
-        return JSON.stringify(data);
+        return data + '\n';
     }))
     .pipe(socket);
 
 virgilio
-    .defineAction('increment', increment);
+    .defineAction('increment', increment)
+    .defineAction('fail', fail);
 
 function increment(value) {
     return value + 1;
+}
+
+function fail(value) {
+    throw 'This action fails!';
 }
