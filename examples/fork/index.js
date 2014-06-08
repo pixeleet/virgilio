@@ -43,8 +43,8 @@ function whenQueueIsUp() {
         fork.kill(code);
     });
 
-    //Pipe communication to and fromt he socket.
-    var socket = net.connect('/tmp/virgilio.sock');
+    //Pipe communication to and from the socket.
+    var socket = net.connect(8945);
     socket
         .pipe(es.split())
         .pipe(es.parse())

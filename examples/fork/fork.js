@@ -28,7 +28,7 @@ var options = {
 var virgilio = new Virgilio(options);
 
 //Pipe communication to the socket created by the master process.
-var socket = net.connect('/tmp/virgilio.sock');
+var socket = net.connect(8945);
 
 socket
     .pipe(es.split())
