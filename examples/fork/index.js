@@ -39,8 +39,8 @@ function whenQueueIsUp() {
 
     //Kill everything when we exit.
     process.on('exit', function(code) {
-        queue.kill(code);
-        fork.kill(code);
+        queue.kill();
+        fork.kill();
     });
 
     //Pipe communication to and from the socket.

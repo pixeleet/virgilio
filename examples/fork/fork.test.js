@@ -21,6 +21,10 @@ before(function(done) {
     setTimeout(done, 300);
 });
 
+after(function() {
+    process.exit();
+});
+
 describe('fork tests', function() {
 
     it('calls an action on a different process', function(done) {

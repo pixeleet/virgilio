@@ -11,16 +11,10 @@ require('gulp-help')(gulp);
 gulp.task('test', 'Run the application tests', function () {
     // Modules used in tests must be loaded in this task
     require('must');
-    return gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
+    gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
         .pipe(mocha({
             reporter: 'spec'
-        }))
-        .on('error', function(err) {
-            throw err;
-        })
-        .once('end', function() {
-            process.exit();
-        });
+        }));
 });
 
 gulp.task('coverage', 'Create istanbul code coverage report form tests', function (cb) {
