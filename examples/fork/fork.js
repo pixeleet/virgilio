@@ -49,5 +49,5 @@ function increment(value) {
 }
 
 function fail(value) {
-    throw 'This action fails!';
+    throw 'Fail!';
 }

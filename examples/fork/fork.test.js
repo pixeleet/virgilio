@@ -32,9 +32,9 @@ describe('fork tests', function() {
     });
 
     it('calls a failing action on a different process', function(done) {
-        virgilio.execute('increment', 41)
-            .then(function(response) {
-                response.must.equal(42);
+        virgilio.execute('fail')
+            .catch(function(error) {
+                error.message.must.equal('Fail!');
                 done();
             }).done();
     });
