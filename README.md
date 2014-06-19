@@ -1,7 +1,11 @@
 <a href="https://github.com/icemobilelab/virgilio"><img src="https://raw.githubusercontent.com/icemobilelab/virgilio/master/images/virgilio.png" align="center"  height="300" width="600"/></a>
 
 # Virgilio
-[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558) [![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio/coverage.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Dependency Status](https://gemnasium.com/icemobilelab/virgilio.svg)](https://gemnasium.com/icemobilelab/virgilio) [![NPM version](https://badge.fury.io/js/virgilio.svg)](http://badge.fury.io/js/virgilio)
+[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
+[![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio/coverage.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Dependency Status](https://gemnasium.com/icemobilelab/virgilio.svg)](https://gemnasium.com/icemobilelab/virgilio)
+[![NPM version](https://badge.fury.io/js/virgilio.svg)](http://badge.fury.io/js/virgilio)
+
+[more tags](#more-tags)
 
 Virgilio is a minimalist library for helping you write modular applications.
 
