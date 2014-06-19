@@ -104,7 +104,7 @@ Virgilio itself reads only the logger property:
         timeout: 1000 //default
     }
 
-To see what options the logger supports, check out the bunyan documentation.
+To see what options the logger supports, check out the [bunyan documentation](https://github.com/trentm/node-bunyan/blob/master/README.md).
 
 The `timeout` options determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
 
