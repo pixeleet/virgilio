@@ -1,7 +1,10 @@
 <a href="https://github.com/icemobilelab/virgilio"><img src="https://raw.githubusercontent.com/icemobilelab/virgilio/master/images/virgilio.png" align="center"  height="300" width="600"/></a>
 
 # Virgilio
-[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558) [![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio/coverage.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png?label=ready&title=Ready)](https://waffle.io/icemobilelab/virgilio) [![NPM version](https://badge.fury.io/js/virgilio.svg)](http://badge.fury.io/js/virgilio)
+[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
+[![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio/coverage.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Dependency Status](https://gemnasium.com/icemobilelab/virgilio.svg)](https://gemnasium.com/icemobilelab/virgilio)
+[![NPM version](https://badge.fury.io/js/virgilio.svg)](http://badge.fury.io/js/virgilio)
+[more tags](#more-tags)
 
 Virgilio is a minimalist library for helping you write modular applications.
 
@@ -105,7 +108,7 @@ Virgilio itself reads only the logger property:
         passThrough: true //default
     }
 
-To see what options the logger supports, check out the bunyan documentation.
+To see what options the logger supports, check out the [bunyan documentation](https://github.com/trentm/node-bunyan/blob/master/README.md).
 
 The `timeout` option determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
 
@@ -121,6 +124,7 @@ The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:
 - `gulp coverage` create the code coverage report in the `coverage/` directory.
 - `gulp docs` generates the annotated sourcecode webpage in the `docs/` directory.
 
-
+## More tags
+[![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png?label=ready&title=Ready)](https://waffle.io/icemobilelab/virgilio)
 
 We dedicate this Library to the ServiceRegistrar, the EigenServices and the PuppetDresser.
