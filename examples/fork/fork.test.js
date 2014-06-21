@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/* global describe, it*/
+/* global describe, it, before */
 var virgilio = require('./');
 
 before(function(done) {
     //Virgilio starts forks, which take a time to start up.
     //Give the process some time before running the tests.
     setTimeout(done, 300);
-});
-
-after(function() {
-    process.exit();
 });
 
 describe('fork tests', function() {
