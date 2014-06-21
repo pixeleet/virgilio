@@ -1,9 +1,9 @@
-var gulp = require('gulp'),
-    mocha = require('gulp-mocha'),
-    docco = require('gulp-docco'),
-    concat = require('gulp-concat'),
-    jshint = require('gulp-jshint'),
-    istanbul = require('gulp-istanbul');
+var gulp = require('gulp');
+var mocha = require('gulp-mocha');
+var docco = require('gulp-docco');
+var concat = require('gulp-concat');
+var jshint = require('gulp-jshint');
+var istanbul = require('gulp-istanbul');
 
 // Help module
 require('gulp-help')(gulp);
