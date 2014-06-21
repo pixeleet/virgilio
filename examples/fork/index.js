@@ -38,7 +38,7 @@ function whenQueueIsUp() {
     var fork = childProcess.fork(require.resolve('./fork'));
 
     //Kill everything when we exit.
-    process.on('exit', function(code) {
+    process.on('exit', function() {
         queue.kill();
         fork.kill();
     });

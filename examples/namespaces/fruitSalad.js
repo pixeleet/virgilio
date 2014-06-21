@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = function(options) {
+module.exports = function() {
     var virgilio = this;
     var getRandomInt = function(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
-    virgilio.defineAction('salad.getRandom', function(request) {
+    virgilio.defineAction('salad.getRandom', function() {
         var virgilio = this;
         return virgilio.execute('fruit.findAll')
             .map(function(fruit) {

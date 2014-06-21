@@ -1,5 +1,4 @@
 var net = require('net');
-var fs = require('fs');
 
 //This stream will act as your message queue.
 var serverStream = new require('stream').PassThrough();

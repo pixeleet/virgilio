@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = function(options) {
+module.exports = function() {
     var virgilio = this;
 
     virgilio
@@ -20,7 +20,7 @@ module.exports = function(options) {
 
     function remindMe(dt) {
         var Promise = this.Promise;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve) {
             setTimeout(resolve, dt, 'reminder!');
         });
     }

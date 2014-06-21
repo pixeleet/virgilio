@@ -48,6 +48,6 @@ function increment(value) {
     return value + 1;
 }
 
-function fail(value) {
+function fail() {
     throw 'Fail!';
 }
