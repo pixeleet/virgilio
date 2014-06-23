@@ -104,12 +104,17 @@ Virgilio itself reads only the logger property:
 
     var options = {
         logger: { level: 10, name: 'virgilio' }, //defaults
-        timeout: 1000 //default
+        timeout: 1000, //default
+        passThrough: true //default
     }
 
 To see what options the logger supports, check out the [bunyan documentation](https://github.com/trentm/node-bunyan/blob/master/README.md).
 
-The `timeout` options determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
+The `timeout` option determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
+
+The `passThrough` option determines whether requests to the virgilio instance are immediately handled by that isntance.
+Ordinarily, this is what you want. However, when having a cluster of virgilio instances working together,
+you might want to centralize message handling and set this option to false.
 
 ## Gulp
 The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:

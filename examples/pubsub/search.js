@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-module.exports = function(options) {
+module.exports = function() {
     var virgilio = this;
     var words = ['app', 'apple', 'apparatus', 'appearance', 'alternate', 'box'];
     var history = [];

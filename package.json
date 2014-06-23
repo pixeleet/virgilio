@@ -1,6 +1,6 @@
 {
   "name": "virgilio",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Virgilio, the next generation module bus",
   "main": "index.js",
   "directories": {
@@ -30,14 +30,17 @@
     "node-uuid": "^1.4.1"
   },
   "devDependencies": {
-    "mocha": "^1.18.2",
-    "must": "^0.11.0",
+    "event-stream": "^3.1.5",
     "gulp": "^3.6.2",
-    "gulp-mocha": "^0.4.1",
-    "gulp-help": "^0.1.6",
+    "gulp-concat": "^2.2.0",
     "gulp-docco": "0.0.4",
+    "gulp-exit": "0.0.2",
+    "gulp-help": "^0.1.6",
+    "gulp-istanbul": "^0.2.0",
     "gulp-jshint": "^1.6.1",
+    "gulp-mocha": "^0.4.1",
     "jshint-stylish": "^0.2.0",
-    "gulp-istanbul": "^0.2.0"
+    "mocha": "^1.18.2",
+    "must": "^0.11.0"
   }
 }

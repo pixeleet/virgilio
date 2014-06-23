@@ -12,28 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/* global describe, it*/
+/* global describe, it, before */
 var virgilio = require('./');
-var Promise = require('bluebird');
 
-describe('remindme tests', function() {
+before(function(done) {
+    //Virgilio starts forks, which take a time to start up.
+    //Give the process some time before running the tests.
+    setTimeout(done, 300);
+});
 
-    it('returns a rejected promise if it has to wait to long', function(done) {
-        virgilio.execute('remindMe', 200)
-            .then(function() {
-                done(new Error('Promise wasn\'t rejected.'));
-            })
-            .catch(function(error) {
-                error.must.be.instanceof(Promise.TimeoutError);
+describe('fork tests', function() {
+
+    it('calls an action on a different process', function(done) {
+        virgilio.execute('increment', 41)
+            .then(function(response) {
+                response.must.equal(42);
                 done();
-            });
+            }).done();
     });
 
-    it('succeeds if the default timeout has been overwritten', function(done) {
-        virgilio.execute('remindMe', 200)
-            .withTimeout(300)
-            .then(function(response) {
-                response.must.equal('reminder!');
+    it('calls a failing action on a different process', function(done) {
+        virgilio.execute('fail')
+            .catch(function(error) {
+                error.message.must.equal('Fail!');
                 done();
             }).done();
     });
