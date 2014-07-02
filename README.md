@@ -116,7 +116,20 @@ The `passThrough` option determines whether requests to the virgilio instance ar
 Ordinarily, this is what you want. However, when having a cluster of virgilio instances working together,
 you might want to centralize message handling and set this option to false.
 
-## Gulp
+## Development
+
+### Extending Virgilio
+To extend the base methods of virgilio, either by adding new ones or overwriting
+existing ones, use `virgilio.extend`:
+
+    virgilio.extend('defineAction', function(args, _super) {
+        //do something here
+        _super.apply(this, args);
+    }
+
+The `_super` argument will only be defined when overwriting an existing method.
+
+### Gulp
 The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:
 
 - `gulp help` generate a fancy help message
