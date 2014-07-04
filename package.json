@@ -2,7 +2,7 @@
   "name": "virgilio",
   "version": "0.5.0",
   "description": "Virgilio, the next generation module bus",
-  "main": "index.js",
+  "main": "./lib/virgilio.js",
   "directories": {
     "example": "examples"
   },
