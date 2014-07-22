@@ -29,9 +29,9 @@ describe('extend tests', function() {
     it('publishes to `newAction` when a new action is defined',
                 function(done) {
         var actionName = 'foo';
-        var noOp = function() {};
+        var noOp = function() { };
 
-        //Start listening to the newAction event.
+        // Start listening to the newAction event.
         virgilio.subscribe('newAction', function(newActionName) {
             newActionName.must.equal(actionName);
             done();

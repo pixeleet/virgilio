@@ -15,7 +15,7 @@
 /* global describe, it, beforeEach */
 var Virgilio = require('../');
 
-describe('Vergilio.prototype.loadModule$()', function() {
+describe('Virgilio.prototype.loadModule$()', function() {
     var virgilio = null;
     beforeEach(function() {
         virgilio = new Virgilio({
