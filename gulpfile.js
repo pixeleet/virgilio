@@ -36,7 +36,7 @@ gulp.task('docs', 'Build the documentation', function () {
     gulp.src(['lib/virgilio.js', 'lib/mediator.js'])
         .pipe(concat('virgilio.js'))
         .pipe(docco())
-        .pipe(gulp.dest('./docs'));
+        .pipe(gulp.dest('./documentation'));
 });
 
 gulp.task('lint', 'Execute JSHint checks on the code', function () {

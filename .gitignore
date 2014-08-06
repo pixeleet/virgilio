@@ -40,9 +40,6 @@ node_modules
 # Build
 build
 
-# Documentation
-docs
-
 # Coverage
 coverage
 
