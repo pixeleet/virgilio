@@ -29,7 +29,7 @@ deploy:
         name: publish docs
         code: |-
           gulp docs
-          cd docs
+          cd documentations
           mv virgilio.html index.html
           git config --global user.email $GITHUB_EMAIL
           git config --global user.name 'IcemobileLab'
