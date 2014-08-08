@@ -6,7 +6,32 @@
 [![NPM version](https://badge.fury.io/js/virgilio.svg)](http://badge.fury.io/js/virgilio)
 [more tags](#more-tags)
 
-Virgilio is a minimalist library for helping you write modular applications.
+Virgilio is a tiny framework helping you to write modular code.
+Its philosophy can be summarized in a couple of points.
+
+**Register once, call anywhere**
+
+Call functions registered with Virgilio (actions) anywhere, without needing to
+know where they are defined.
+This creates a flat dependency tree in even the most complex projects.
+
+Virgilio makes it easy to start your project in a single file, then restructure
+your code as you go.
+
+**Tiny core, easily extendable**
+
+Virgilio facilitates communication between components of your application.
+That's it.
+Additional functionality goes into optional extensions.
+
+Virgilio is easy to pick up because there isn't a lot to learn.
+
+**Developers first**
+
+Virgilio is build with a single question in mind: How would a developer like to
+use it.
+
+That's why promises are a part of virgilio.
 
 ## Getting started
 The following creates a Virglio instance and tells it to load the number module.
