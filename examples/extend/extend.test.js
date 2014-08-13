@@ -23,20 +23,6 @@ describe('extend tests', function() {
             done();
         });
 
-        virgilio.execute('bar', 1, 2);
-    });
-
-    it('publishes to `newAction` when a new action is defined',
-                function(done) {
-        var actionName = 'foo';
-        var noOp = function() { };
-
-        // Start listening to the newAction event.
-        virgilio.subscribe('newAction', function(newActionName) {
-            newActionName.must.equal(actionName);
-            done();
-        });
-
-        virgilio.defineAction(actionName, noOp);
+        virgilio.superbar(1, 2);
     });
 });

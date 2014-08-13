@@ -20,7 +20,7 @@ module.exports = function() {
 
     virgilio.defineAction('salad.getRandom', function() {
         var virgilio = this;
-        return virgilio.execute('fruit.findAll')
+        return virgilio.fruit.findAll()
             .map(function(fruit) {
                 return {
                     fruit: fruit,
