@@ -1,0 +1,6 @@
+{
+    "logger": {
+        "name": "virgilio",
+        "streams": []
+    }
+}

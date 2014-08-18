@@ -9,6 +9,17 @@ var exit = require('gulp-exit');
 // Help module
 require('gulp-help')(gulp);
 
+gulp.task('test-new', 'Run the application tests', function () {
+    // Modules used in tests must be loaded in this task
+    require('must');
+    gulp.src(['./examples/*.js'])
+        .pipe(mocha({
+            ui: 'qunit',
+            reporter: 'spec'
+        }))
+        .pipe(exit());
+});
+
 gulp.task('test', 'Run the application tests', function () {
     // Modules used in tests must be loaded in this task
     require('must');
