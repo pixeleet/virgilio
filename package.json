@@ -25,22 +25,22 @@
   },
   "homepage": "https://github.com/icemobilelab/virgilio",
   "dependencies": {
-    "bluebird": "^1.2.4",
-    "bunyan": "^0.22.3",
+    "bluebird": "^2.3.0",
+    "bunyan": "^1.0.0",
     "node-uuid": "^1.4.1"
   },
   "devDependencies": {
     "event-stream": "^3.1.5",
-    "gulp": "^3.6.2",
+    "gulp": "^3.8.7",
     "gulp-concat": "^2.2.0",
     "gulp-docco": "0.0.4",
     "gulp-exit": "0.0.2",
     "gulp-help": "^0.1.6",
     "gulp-istanbul": "^0.2.0",
     "gulp-jshint": "^1.6.1",
-    "gulp-mocha": "^0.4.1",
-    "jshint-stylish": "^0.2.0",
+    "gulp-mocha": "^1.0.0",
+    "jshint-stylish": "^0.4.0",
     "mocha": "^1.18.2",
-    "must": "^0.11.0"
+    "must": "^0.12.0"
   }
 }
