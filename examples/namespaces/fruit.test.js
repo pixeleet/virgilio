@@ -13,14 +13,13 @@
 // limitations under the License.
 
 /* global describe, it*/
-var Promise = require('bluebird');
 var virgilio = require('./');
 
 describe('fruit tests', function() {
 
     it('Throws an error when loading a non-existing module', function() {
         var test = function() {
-            virgilio.loadModule('foobar');
+            virgilio.loadModule$('foobar');
         };
         test.must.throw(virgilio.InvalidModuleError);
     });
@@ -40,7 +39,7 @@ describe('fruit tests', function() {
         });
 
         it('Calls an action on a namespace', function(done) {
-            virgilio.namespace('fruit').findAll()
+            virgilio.namespace$('fruit').findAll()
                 .then(function(fruits) {
                     checkFruits(fruits);
                     done();
@@ -49,7 +48,7 @@ describe('fruit tests', function() {
 
         it('Calls an action defined on the root, regardless of namespace',
                     function(done) {
-            virgilio.namespace('a.very.long.name').fruit.findAll()
+            virgilio.namespace$('a.very.long.name').fruit.findAll()
                 .then(function(fruits) {
                     checkFruits(fruits);
                     done();
@@ -86,7 +85,7 @@ describe('fruit tests', function() {
         });
 
         it('Passes all arguments to an action', function(done) {
-            virgilio.defineAction('test', function(k, l, m) {
+            virgilio.defineAction$('test', function(k, l, m) {
                 k.must.equal(1);
                 l.must.equal(2);
                 m.must.equal(3);
@@ -100,7 +99,7 @@ describe('fruit tests', function() {
         var fooAction = function() { return 'foo'; };
 
         it('Allows defining an action', function(done) {
-            virgilio.defineAction('foo', fooAction);
+            virgilio.defineAction$('foo', fooAction);
             virgilio.foo()
                 .then(function(response) {
                     response.must.equal('foo');
@@ -110,7 +109,7 @@ describe('fruit tests', function() {
         });
 
         it('Allows defining an action on a namespace', function(done) {
-            virgilio.namespace('a.long.name').defineAction('bar', fooAction);
+            virgilio.namespace$('a.long.name').defineAction$('bar', fooAction);
             virgilio.a.long.name.bar()
                 .then(function(response) {
                     response.must.equal('foo');
@@ -120,7 +119,7 @@ describe('fruit tests', function() {
         });
 
         it('Has access to a logger instance', function(done) {
-            virgilio.defineAction('loggerTest', function() {
+            virgilio.defineAction$('loggerTest', function() {
                 this.log.trace.must.be.a.function();
                 this.log.info.must.be.a.function();
                 this.log.error.must.be.a.function();
@@ -130,7 +129,7 @@ describe('fruit tests', function() {
         });
 
         it('Returns the same virgilio instance, for chaining', function() {
-            var result = virgilio.defineAction('chainTest', function() {});
+            var result = virgilio.defineAction$('chainTest', function() {});
             result.must.equal(virgilio);
         });
     });

@@ -22,13 +22,13 @@ var options = {
 };
 var virgilio = new Virgilio(options);
 
-virgilio.extend('defineAction', altDefineAction);
+virgilio.extend$('defineAction$', altDefineAction);
 
 //This function publishes to 'newAction' every time a new action is registered.
 function altDefineAction(args, _super) {
     //Change the action name.
     args[0] = 'super' + args[0];
-    _super.apply(this, args);
+    return _super.apply(this, args);
 }
 
 module.exports = virgilio;

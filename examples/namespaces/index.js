@@ -22,5 +22,5 @@ var options = {
     timeout: 100
 };
 module.exports = new Virgilio(options)
-    .loadModule(require('./fruit'))
-    .loadModule(require('./fruitSalad'));
+    .loadModule$(require('./fruit'))
+    .loadModule$(require('./fruitSalad'));

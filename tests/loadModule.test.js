@@ -32,8 +32,8 @@ describe('Virgilio.prototype.loadModule$()', function() {
             executeCount++;
         }
         virgilio
-            .loadModule(testModule)
-            .loadModule(testModule);
+            .loadModule$(testModule)
+            .loadModule$(testModule);
         executeCount.must.equal(1);
     });
 
@@ -42,7 +42,7 @@ describe('Virgilio.prototype.loadModule$()', function() {
         nonModules.forEach(function(nonModule) {
             it('throws an error when loading: ' + nonModule, function() {
                 var testFunction = function() {
-                    virgilio.loadModule(nonModule);
+                    virgilio.loadModule$(nonModule);
                 };
                 testFunction.must.throw();
             });

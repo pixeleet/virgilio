@@ -17,7 +17,7 @@ var virgilio = require('./');
 
 describe('extend tests', function() {
     it('still calls defineAction like before', function(done) {
-        virgilio.defineAction('bar', function(one, two) {
+        virgilio.defineAction$('bar', function(one, two) {
             one.must.equal(1);
             two.must.equal(2);
             done();
