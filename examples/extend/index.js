@@ -26,9 +26,8 @@ virgilio.extend('defineAction', altDefineAction);
 
 //This function publishes to 'newAction' every time a new action is registered.
 function altDefineAction(args, _super) {
-    var virgilio = this;
-    var actionName = args[0];
-    virgilio.publish('newAction', actionName);
+    //Change the action name.
+    args[0] = 'super' + args[0];
     _super.apply(this, args);
 }
 

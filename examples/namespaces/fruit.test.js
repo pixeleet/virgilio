@@ -32,7 +32,7 @@ describe('fruit tests', function() {
         }
 
         it('Calls an action and returns the result', function(done) {
-            virgilio.execute('fruit.findAll')
+            virgilio.fruit.findAll()
                 .then(function(fruits) {
                     checkFruits(fruits);
                     done();
@@ -40,7 +40,7 @@ describe('fruit tests', function() {
         });
 
         it('Calls an action on a namespace', function(done) {
-            virgilio.namespace('fruit').execute('findAll')
+            virgilio.namespace('fruit').findAll()
                 .then(function(fruits) {
                     checkFruits(fruits);
                     done();
@@ -49,7 +49,7 @@ describe('fruit tests', function() {
 
         it('Calls an action defined on the root, regardless of namespace',
                     function(done) {
-            virgilio.namespace('a.namespace.is.long').execute('fruit.findAll')
+            virgilio.namespace('a.very.long.name').fruit.findAll()
                 .then(function(fruits) {
                     checkFruits(fruits);
                     done();
@@ -57,7 +57,7 @@ describe('fruit tests', function() {
         });
 
         it('Calls an action that in turn calls another', function(done) {
-            virgilio.execute('salad.getRandom')
+            virgilio.salad.getRandom()
                 .then(function(salad) {
                     salad.must.not.be.undefined();
                     done();
@@ -66,20 +66,23 @@ describe('fruit tests', function() {
 
         it('Catches errors thrown by modules, and returns a rejected promise',
                     function(done) {
-            virgilio.execute('fruit.delete', 'ananas')
+            virgilio.fruit.delete('ananas')
                 .catch(function(err) {
                     err.must.not.be.undefined();
                     done();
                 }).done();
         });
 
-        it('Returns a rejected promise, when a non-existing action is called',
+        it('throws a TypeError when a non-existing action is called',
                     function(done) {
-            virgilio.execute('fruit.eat', 'apple')
-                .catch(function(err) {
-                    err.must.be.instanceof(Promise.TimeoutError);
-                    done();
-                }).done();
+            try {
+                virgilio.fruit.eat('apple');
+            }
+            catch(err) {
+                err.must.be.instanceof(TypeError);
+                return done();
+            }
+            throw new Error('No error was thrown.');
         });
 
         it('Passes all arguments to an action', function(done) {
@@ -89,43 +92,45 @@ describe('fruit tests', function() {
                 m.must.equal(3);
                 done();
             });
-            virgilio.execute('test', 1, 2, 3).done();
+            virgilio.test(1, 2, 3).done();
         });
     });
 
     describe('defining actions', function() {
         var fooAction = function() { return 'foo'; };
-        var testFoo = function(actionName, done) {
-            virgilio.execute(actionName)
+
+        it('Allows defining an action', function(done) {
+            virgilio.defineAction('foo', fooAction);
+            virgilio.foo()
                 .then(function(response) {
                     response.must.equal('foo');
                     done();
                 })
                 .done();
-        };
-
-        it('Allows defining an action', function(done) {
-            virgilio.defineAction('foo', fooAction);
-            testFoo('foo', done);
         });
 
         it('Allows defining an action on a namespace', function(done) {
-            virgilio.namespace('a.namespace').defineAction('bar', fooAction);
-            testFoo('a.namespace.bar', done);
+            virgilio.namespace('a.long.name').defineAction('bar', fooAction);
+            virgilio.a.long.name.bar()
+                .then(function(response) {
+                    response.must.equal('foo');
+                    done();
+                })
+                .done();
         });
 
         it('Has access to a logger instance', function(done) {
-            virgilio.defineAction('ice', function() {
+            virgilio.defineAction('loggerTest', function() {
                 this.log.trace.must.be.a.function();
                 this.log.info.must.be.a.function();
                 this.log.error.must.be.a.function();
                 done();
             });
-            virgilio.execute('ice');
+            virgilio.loggerTest();
         });
 
         it('Returns the same virgilio instance, for chaining', function() {
-            var result = virgilio.defineAction('foo', function() {});
+            var result = virgilio.defineAction('chainTest', function() {});
             result.must.equal(virgilio);
         });
     });
