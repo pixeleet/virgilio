@@ -4,15 +4,17 @@ var docco = require('gulp-docco');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
+var exampleToTest = require('./gulp-example-to-test');
 var exit = require('gulp-exit');
 
 // Help module
 require('gulp-help')(gulp);
 
-gulp.task('test-new', 'Run the application tests', function () {
-    // Modules used in tests must be loaded in this task
-    require('must');
+gulp.task('exp', 'Run the application tests', function () {
     gulp.src(['./examples/*.js'])
+        .pipe(exampleToTest())
+        .pipe(gulp.dest('./build/example-tests'))
+        .pipe(require('gulp-debug')())
         .pipe(mocha({
             ui: 'qunit',
             reporter: 'spec'
@@ -35,7 +37,7 @@ gulp.task('coverage', 'Create istanbul code coverage report form tests',
     gulp.src(['lib/**/*.js', 'index.js'])
         .pipe(istanbul())
         .on('finish', function () {
-            var must = require('must');
+            require('must');
             gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
                 .pipe(mocha())
                 .pipe(istanbul.writeReports())
