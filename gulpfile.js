@@ -13,8 +13,7 @@ require('gulp-help')(gulp);
 gulp.task('exp', 'Run the application tests', function () {
     gulp.src(['./examples/*.js'])
         .pipe(exampleToTest())
-        .pipe(gulp.dest('./build/example-tests'))
-        .pipe(require('gulp-debug')())
+        .pipe(gulp.dest('./example-tests'))
         .pipe(mocha({
             ui: 'qunit',
             reporter: 'spec'

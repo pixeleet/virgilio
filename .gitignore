@@ -1,6 +1,7 @@
 #Project Directories
 docs
 coverage
+example-tests
 
 #node.js
 pids
