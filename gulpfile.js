@@ -10,7 +10,7 @@ var exit = require('gulp-exit');
 // Help module
 require('gulp-help')(gulp);
 
-gulp.task('exp', 'Run the application tests', function () {
+gulp.task('example-tests', ['unit-tests'], function () {
     gulp.src(['./examples/*.js'])
         .pipe(exampleToTest())
         .pipe(gulp.dest('./example-tests'))
@@ -21,15 +21,16 @@ gulp.task('exp', 'Run the application tests', function () {
         .pipe(exit());
 });
 
-gulp.task('test', 'Run the application tests', function () {
+gulp.task('unit-tests', function () {
     // Modules used in tests must be loaded in this task
     require('must');
-    gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
+    return gulp.src(['./tests/**/*.test.js'])
         .pipe(mocha({
             reporter: 'spec'
-        }))
-        .pipe(exit());
+        }));
 });
+
+gulp.task('test', ['example-tests']);
 
 gulp.task('coverage', 'Create istanbul code coverage report form tests',
             function (cb) {
