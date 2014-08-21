@@ -13,12 +13,12 @@ require('gulp-help')(gulp);
 gulp.task('example-tests', ['unit-tests'], function () {
     gulp.src(['./examples/*.js'])
         .pipe(exampleToTest())
+        .on('error', console.log)
         .pipe(gulp.dest('./example-tests'))
         .pipe(mocha({
             ui: 'qunit',
             reporter: 'spec'
-        }))
-        .pipe(exit());
+        }));
 });
 
 gulp.task('unit-tests', function () {

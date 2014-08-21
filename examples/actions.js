@@ -16,7 +16,7 @@ virgilio.getFruit(0)
         console.log(result);    //=> 'apple'
     });
 
-//Calling an action and getting an error.
+//Calling an action that throws an error results in a rejected promise.
 virgilio.getFruit(100)
     .catch(function(err) {
         console.log(err.message);   //=> '404 fruit not found'

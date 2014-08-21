@@ -11,7 +11,8 @@ function gulpExampleToTest() {
     var stream = through.obj(function(file, enc, callback) {
 
         if (file.isStream()) {
-            throw new gutil.PluginError(PLUGIN_NAME, 'Missing prefix text!');
+            this.emit('error', new gutil.PluginError(PLUGIN_NAME,
+                                                     'No support for streams'));
         }
 
         if (file.isBuffer()) {
@@ -42,7 +43,10 @@ function gulpExampleToTest() {
             var newVirgilioRegex = /^(.*Virgilio\()(.*)(\).*)$/m;
             var newVirgilioResult = newVirgilioRegex.exec(prelude);
             if (!newVirgilioResult) {
-                throw new Error('No virgilio found in file: ' + fileName);
+                this.emit('error', new gutil.PluginError(
+                    PLUGIN_NAME,
+                    'No virgilio found in file: ' + fileName)
+                );
             }
             var options = newVirgilioResult[2].trim() || '{}';
             var newOptions = format('_.extend(loggerConfig, %s)', options);
@@ -69,12 +73,15 @@ function gulpExampleToTest() {
                     var assertedValue = regexResult && regexResult[2].trim();
                     var expectedValue = regexResult && regexResult[3].trim();
                     if (!assertedValue || !expectedValue) {
-                        throw new Error([
-                            'Line cannot be turned into assertion:',
-                            '  ' + line.trim(),
-                            'Expected format:',
-                            '  ' + CONSOLE_LOG_FORMAT
-                        ].join('\n'));
+                        this.emit('error', new gutil.PluginError(
+                            PLUGIN_NAME,
+                            [
+                                'Line cannot be turned into assertion:',
+                                '  ' + line.trim(),
+                                'Expected format:',
+                                '  ' + CONSOLE_LOG_FORMAT
+                            ].join('\n'))
+                        );
                     }
                     lastAssertionLineIndex = index;
                     var assertLine = format(
