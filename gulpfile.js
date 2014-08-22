@@ -1,24 +1,35 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var docco = require('gulp-docco');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
+var clean = require('gulp-clean');
 var exampleToTest = require('./gulp-example-to-test');
-var exit = require('gulp-exit');
+
+function onError(error) {
+    gutil.log(error);
+    process.exit(1);
+}
 
 // Help module
 require('gulp-help')(gulp);
 
-gulp.task('example-tests', ['unit-tests'], function () {
-    gulp.src(['./examples/*.js'])
+gulp.task('example-tests', ['unit-tests', 'clean-example-tests'], function () {
+    gulp.src('./examples/*.js')
         .pipe(exampleToTest())
-        .on('error', console.log)
+        .on('error', onError)
         .pipe(gulp.dest('./example-tests'))
         .pipe(mocha({
             ui: 'qunit',
             reporter: 'spec'
         }));
+});
+
+gulp.task('clean-example-tests', function () {
+    gulp.src('./example-tests', { read: false })
+        .pipe(clean());
 });
 
 gulp.task('unit-tests', function () {

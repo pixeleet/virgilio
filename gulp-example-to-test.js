@@ -16,6 +16,7 @@ function gulpExampleToTest() {
         }
 
         if (file.isBuffer()) {
+            var _this = this;
             var fileName = path.basename(file.path, '.js');
             var contents = file.contents.toString(enc);
 
@@ -73,7 +74,7 @@ function gulpExampleToTest() {
                     var assertedValue = regexResult && regexResult[2].trim();
                     var expectedValue = regexResult && regexResult[3].trim();
                     if (!assertedValue || !expectedValue) {
-                        this.emit('error', new gutil.PluginError(
+                        _this.emit('error', new gutil.PluginError(
                             PLUGIN_NAME,
                             [
                                 'Line cannot be turned into assertion:',
