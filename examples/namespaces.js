@@ -1,7 +1,7 @@
 var Virgilio = require('../');
 var virgilio = new Virgilio();
 
-//Defining actions on namespaces
+//Defining actions on namespaces.
 virgilio.defineAction$('animal.human.speak', function() {
     return 'Hello world!';
 });
@@ -14,19 +14,19 @@ virgilio.namespace$('plant').defineAction$('photosynthesis',
     return light ? 'C6H1206' : 'Zzzzzzz';
 });
 
-//Calling an action on a namespace
+//Calling an action on a namespace.
 virgilio.animal.human.speak()
     .then(function(result) {
         console.log(result);    //=> 'Hello world!'
     });
 
-//Calling an action on a lower namespace
+//Calling an action on a lower namespace.
 virgilio.animal.human.eat()
     .then(function(result) {
         console.log(result);    //=> 'Om nom nom.'
     });
 
-//Calling an action on a sibling namespace fails
+//Calling an action on a sibling namespace fails.
 try {
     virgilio.animal.photosynthesis();
 }
