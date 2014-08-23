@@ -1,3 +1,4 @@
+var fs = require('fs');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
@@ -6,7 +7,9 @@ var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
 var clean = require('gulp-clean');
-var exampleToTest = require('./gulp-example-to-test');
+var exampleToTest = require('gulp-example-to-test');
+var replace = require('gulp-replace');
+var insert = require('gulp-insert');
 
 function onError(error) {
     gutil.log(error);
@@ -16,9 +19,14 @@ function onError(error) {
 // Help module
 require('gulp-help')(gulp);
 
+var newVirgilioRegex = /^(.*Virgilio\()(.*)(\).*)$/m;
+var exampleTestHeader = fs.readFileSync('./helpers/example-test-header.js');
 gulp.task('example-tests', ['unit-tests', 'clean-example-tests'], function () {
     gulp.src('./examples/*.js')
         .pipe(exampleToTest())
+        .pipe(insert.prepend(exampleTestHeader))
+        .pipe(replace(/Virgilio\(\)/, 'Virgilio({})'))
+        .pipe(replace(newVirgilioRegex, '$1_.extend(loggerConfig, $2)$3'))
         .on('error', onError)
         .pipe(gulp.dest('./example-tests'))
         .pipe(mocha({
