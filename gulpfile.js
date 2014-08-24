@@ -65,8 +65,7 @@ gulp.task('coverage', 'Create istanbul code coverage report form tests',
 });
 
 gulp.task('docs', 'Build the documentation', function () {
-    gulp.src(['lib/virgilio.js', 'lib/mediator.js'])
-        .pipe(concat('virgilio.js'))
+    gulp.src('lib/virgilio.js')
         .pipe(docco())
         .pipe(gulp.dest('./documentation'));
 });
