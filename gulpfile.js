@@ -10,6 +10,7 @@ var clean = require('gulp-clean');
 var exampleToTest = require('gulp-example-to-test');
 var replace = require('gulp-replace');
 var insert = require('gulp-insert');
+var runSequence = require('run-sequence');
 
 function onError(error) {
     gutil.log(error);
@@ -21,26 +22,48 @@ require('gulp-help')(gulp);
 
 var newVirgilioRegex = /^(.*Virgilio\()(.*)(\).*)$/m;
 var exampleTestHeader = fs.readFileSync('./helpers/example-test-header.js');
-gulp.task('example-tests', ['unit-tests', 'clean-example-tests'], function () {
-    gulp.src('./examples/*.js')
-        .pipe(exampleToTest())
-        .pipe(insert.prepend(exampleTestHeader))
-        .pipe(replace(/Virgilio\(\)/, 'Virgilio({})'))
-        .pipe(replace(newVirgilioRegex, '$1_.extend(loggerConfig, $2)$3'))
-        .on('error', onError)
-        .pipe(gulp.dest('./example-tests'))
+
+gulp.task('test', function(callback) {
+    runSequence(
+        'unit-tests',
+        'example-tests',
+        callback
+    );
+});
+
+gulp.task('example-tests', function(callback) {
+    runSequence(
+        'clean-example-tests',
+        'generate-example-tests',
+        'run-example-tests',
+        callback
+    );
+});
+
+gulp.task('run-example-tests', function() {
+    return gulp.src('./example-tests/*.js')
         .pipe(mocha({
             ui: 'qunit',
             reporter: 'spec'
         }));
 });
 
-gulp.task('clean-example-tests', function () {
-    gulp.src('./example-tests', { read: false })
+gulp.task('generate-example-tests', function() {
+    return gulp.src('./examples/*.js')
+        .pipe(exampleToTest())
+        .pipe(insert.prepend(exampleTestHeader))
+        .pipe(replace(/Virgilio\(\)/, 'Virgilio({})'))
+        .pipe(replace(newVirgilioRegex, '$1_.extend(loggerConfig, $2)$3'))
+        .on('error', onError)
+        .pipe(gulp.dest('./example-tests'));
+});
+
+gulp.task('clean-example-tests', function() {
+    return gulp.src('./example-tests', { read: false })
         .pipe(clean());
 });
 
-gulp.task('unit-tests', function () {
+gulp.task('unit-tests', function() {
     // Modules used in tests must be loaded in this task
     require('must');
     return gulp.src(['./tests/**/*.test.js'])
@@ -49,22 +72,40 @@ gulp.task('unit-tests', function () {
         }));
 });
 
-gulp.task('test', ['example-tests']);
+// gulp.task('coverage', 'Create istanbul code coverage report form tests',
+//             function(callback) {
+//     gulp.src(['lib/**/*.js', 'index.js'])
+//         .pipe(istanbul())
+//         .on('finish', function () {
+//             require('must');
+//             gulp.src(['./tests/**/*.test.js'])
+//                 .pipe(mocha())
+//                 .pipe(istanbul.writeReports())
+//                 .on('end', callback);
+//         });
+// });
 
-gulp.task('coverage', 'Create istanbul code coverage report form tests',
-            function (cb) {
-    gulp.src(['lib/**/*.js', 'index.js'])
-        .pipe(istanbul())
-        .on('finish', function () {
-            require('must');
-            gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
-                .pipe(mocha())
-                .pipe(istanbul.writeReports())
-                .on('end', cb);
-        });
+gulp.task('coverage', function(callback) {
+    runSequence(
+        'setup-istanbul',
+        'test',
+        'report-istanbul',
+        callback
+    );
 });
 
-gulp.task('docs', 'Build the documentation', function () {
+gulp.task('setup-istanbul', function(callback) {
+    gulp.src(['lib/**/*.js', 'index.js'])
+        .pipe(istanbul())
+        .on('finish', callback);
+});
+
+gulp.task('report-istanbul', function() {
+    return gulp.src(['lib/**/*.js', 'index.js'])
+        .pipe(istanbul.writeReports());
+});
+
+gulp.task('docs', 'Build the documentation', function() {
     gulp.src('lib/virgilio.js')
         .pipe(docco())
         .pipe(gulp.dest('./documentation'));
