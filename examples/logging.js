@@ -15,7 +15,7 @@ var virgilio = new Virgilio(options);
 
 //Log a message from an action on a namespace.
 virgilio.defineAction$('parrot.talk', function(line) {
-    this.log.info(line);
+    this.log$.info(line);
 });
 
 logStream.on('data', function(chunk) {
