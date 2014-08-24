@@ -6,7 +6,7 @@ virgilio.defineAction$('animal.human.speak', function() {
     return 'Hello world!';
 });
 virgilio.animal.defineAction$('eat', function(food) {
-    this.log.info('Eating ' + food);
+    this.log$.info('Eating ' + food);
     return 'Om nom nom.';
 });
 virgilio.namespace$('plant').defineAction$('photosynthesis',
