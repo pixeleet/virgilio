@@ -10,8 +10,8 @@ No refactoring needed.
 
 * [Features](#features)
 * [Getting Started](#getting-started)
-* [API Reference](github.com/icemobilelab/virgilio/wiki/API)
-* [Development](github.com/icemobilelab/virgilio/wiki/Development)
+* [API Reference](https://github.com/icemobilelab/virgilio/wiki/API)
+* [Development](https://github.com/icemobilelab/virgilio/wiki/Development)
 * [More Tags](#more-tags)
 
 ## Features
