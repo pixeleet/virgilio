@@ -31,6 +31,11 @@ use it.
 
 That's why promises are a part of virgilio.
 
+## Versioning
+This project mostly follows semantic versioning.
+
+Until the library reaches version 1.0, changes to the public API will always carry a minor version bump, such as going from 0.7.2 to 0.8.0. Patch releases (e.g. 0.8.0 -> 0.8.1) may introduce new features that don't break the public API.
+
 ## Getting started
 The following creates a Virglio instance and tells it to load the number module.
 
