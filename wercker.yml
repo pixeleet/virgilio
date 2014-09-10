@@ -3,11 +3,6 @@ build:
   steps:
     - npm-install
     - npm-test
-  after-steps:
-    - hipchat-notify:
-        token: $HIPCHAT_TOKEN
-        room-id: $HIPCHAT_ROOM_ID
-        from-name: $HIPCHAT_FROM
 deploy:
   steps:
     - script:
@@ -17,10 +12,6 @@ deploy:
         name: npm publish
         code: npm publish
   after-steps:
-    - hipchat-notify:
-        token: $HIPCHAT_TOKEN
-        room-id: $HIPCHAT_ROOM_ID
-        from-name: $HIPCHAT_FROM
     - npm-install
     - script:
         name: install gulp globally
@@ -32,7 +23,7 @@ deploy:
           cd documentation
           mv concordia.html index.html
           git config --global user.email $GITHUB_EMAIL
-          git config --global user.name 'IcemobileLab'
+          git config --global user.name 'Concordia'
           git init
           git add .
           git commit -m "Publishing annotated source code."
