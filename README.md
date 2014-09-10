@@ -48,8 +48,8 @@ Concordia.number.add(3, 6).then(function(result) {
 ```
 
 ## More tags
-[![Code Climate](https://codeclimate.com/github/concordiajs/concordia.png)](https://codeclimate.com/github/concordiajs/concordia)
-[![Code Climate](https://codeclimate.com/github/concordiajs/concordia/coverage.png)](https://codeclimate.com/github/concordiajs/concordia)
+[![Code Climate](https://codeclimate.com/github/ConcordiaJS/concordia/badges/gpa.svg)](https://codeclimate.com/github/ConcordiaJS/concordia)
+[![Test Coverage](https://codeclimate.com/github/ConcordiaJS/concordia/badges/coverage.svg)](https://codeclimate.com/github/ConcordiaJS/concordia)
 [![Dependency Status](https://gemnasium.com/ConcordiaJS/concordia.svg)](https://gemnasium.com/ConcordiaJS/concordia)
 
 We dedicate this Library to the ServiceRegistrar, the EigenServices and the PuppetDresser.
