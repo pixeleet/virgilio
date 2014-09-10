@@ -1,7 +1,7 @@
 <a href="https://github.com/concordiajs/concordia"><img src="https://raw.githubusercontent.com/concordiajs/concordia/master/images/concordia.png" align="center"  height="300" width="600"/></a>
 
 # Concordia
-[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
+[![wercker status](https://app.wercker.com/status/cda739f10bd52559975e497cbdbbe9c3/s/master "wercker status")](https://app.wercker.com/project/bykey/cda739f10bd52559975e497cbdbbe9c3)
 [![NPM version](https://badge.fury.io/js/concordia.svg)](http://badge.fury.io/js/concordia)
 
 Concordia is a tiny framework helping you write modular applications.
