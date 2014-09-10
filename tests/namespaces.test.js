@@ -1,29 +1,29 @@
 /* global describe, it, beforeEach */
-var Virgilio = require('../');
+var Concordia = require('../');
 
-describe('Virgilio.prototype.namespace$()', function() {
-    var virgilio = null;
+describe('Concordia.prototype.namespace$()', function() {
+    var concordia = null;
     beforeEach(function() {
-        virgilio = new Virgilio({
+        concordia = new Concordia({
             logger: {
-                name: 'virgilio',
+                name: 'concordia',
                 streams: []
             }
         });
     });
 
     it('can reuse names in a namespace-chain', function() {
-        virgilio.namespace$('foo.foo');
-        virgilio.foo.foo.must.exist();
-        virgilio.foo.must.not.be(virgilio.foo.foo);
+        concordia.namespace$('foo.foo');
+        concordia.foo.foo.must.exist();
+        concordia.foo.must.not.be(concordia.foo.foo);
     });
 
     it('can give an action the name of a namespce', function() {
-        virgilio.namespace$('foo').defineAction$('foo', function() {});
-        virgilio.foo.foo.must.exist();
-        //virgilio.foo is a namespace.
-        virgilio.foo.must.be.instanceof(Virgilio);
-        //virgilio.foo.foo is an action.
-        virgilio.foo.foo.must.be.a.function();
+        concordia.namespace$('foo').defineAction$('foo', function() {});
+        concordia.foo.foo.must.exist();
+        //concordia.foo is a namespace.
+        concordia.foo.must.be.instanceof(Concordia);
+        //concordia.foo.foo is an action.
+        concordia.foo.foo.must.be.a.function();
     });
 });

@@ -1,17 +1,17 @@
-var Virgilio = require('../');
-var virgilio = new Virgilio();
+var Concordia = require('../');
+var concordia = new Concordia();
 
 //Loading a module.
-virgilio.loadModule$(myModule);
+concordia.loadModule$(myModule);
 function myModule() {
-    var virgilio = this;
-    virgilio.defineAction$('answer', function() {
+    var concordia = this;
+    concordia.defineAction$('answer', function() {
         return 42;
     });
 }
 
 //Calling an action loaded in a module.
-virgilio.answer()
+concordia.answer()
     .then(function(result) {
         console.log(result);    //=> 42
     });

@@ -1,17 +1,17 @@
-var Virgilio = require('../');
-var virgilio = new Virgilio();
+var Concordia = require('../');
+var concordia = new Concordia();
 
 //Loading a module on a namespace.
-virgilio.namespace$('answers').loadModule$(myModule);
+concordia.namespace$('answers').loadModule$(myModule);
 function myModule() {
-    var virgilio = this;
-    virgilio.defineAction$('ultimate', function() {
+    var concordia = this;
+    concordia.defineAction$('ultimate', function() {
         return 42;
     });
 }
 
 //Calling an action loaded in a module on a namespace.
-virgilio.answers.ultimate()
+concordia.answers.ultimate()
     .then(function(result) {
         console.log(result);    //=> 42
     });

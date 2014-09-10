@@ -1,22 +1,22 @@
-var Virgilio = require('../');
-var virgilio = new Virgilio();
+var Concordia = require('../');
+var concordia = new Concordia();
 
 //Defining a simple error.
-virgilio.registerError$({
+concordia.registerError$({
     name: 'FooError'
 });
-var fooError = new virgilio.FooError('foo!');
+var fooError = new concordia.FooError('foo!');
 console.log(fooError.name);     //=> 'FooError'
 console.log(fooError.message);  //=> 'foo!'
 
 //Defining an error with a custom constructor.
-virgilio.registerError$({
+concordia.registerError$({
     name: 'DivideByZeroError',
     init: function(number) {
         this.message = 'Can`t divide ' + number + ' by zero.';
         this.failingNumber = number;
     }
 });
-var divideByZeroError = new virgilio.DivideByZeroError(5);
+var divideByZeroError = new concordia.DivideByZeroError(5);
 console.log(divideByZeroError.message);         //=> 'Can`t divide 5 by zero.'
 console.log(divideByZeroError.failingNumber);   //=> 5

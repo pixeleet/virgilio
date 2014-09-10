@@ -13,14 +13,14 @@
 // limitations under the License.
 
 /* global describe, it, beforeEach */
-var Virgilio = require('../');
+var Concordia = require('../');
 
-describe('Virgilio.prototype.loadModule$()', function() {
-    var virgilio = null;
+describe('Concordia.prototype.loadModule$()', function() {
+    var concordia = null;
     beforeEach(function() {
-        virgilio = new Virgilio({
+        concordia = new Concordia({
             logger: {
-                name: 'virgilio',
+                name: 'concordia',
                 streams: []
             }
         });
@@ -31,7 +31,7 @@ describe('Virgilio.prototype.loadModule$()', function() {
         function testModule() {
             executeCount++;
         }
-        virgilio
+        concordia
             .loadModule$(testModule)
             .loadModule$(testModule);
         executeCount.must.equal(1);
@@ -42,7 +42,7 @@ describe('Virgilio.prototype.loadModule$()', function() {
         nonModules.forEach(function(nonModule) {
             it('throws an error when loading: ' + nonModule, function() {
                 var testFunction = function() {
-                    virgilio.loadModule$(nonModule);
+                    concordia.loadModule$(nonModule);
                 };
                 testFunction.must.throw();
             });

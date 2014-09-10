@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var loggerConfig = {
     logger: {
-        name: 'virgilio',
+        name: 'concordia',
         streams: []
     }
 };

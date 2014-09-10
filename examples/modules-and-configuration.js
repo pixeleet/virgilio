@@ -1,11 +1,11 @@
-var Virgilio = require('../');
+var Concordia = require('../');
 var options = {
     foo: 'bar'
 };
-var virgilio = new Virgilio(options);
+var concordia = new Concordia(options);
 
 //Getting the configuration in a module.
-virgilio.loadModule$(myModule);
+concordia.loadModule$(myModule);
 function myModule(options) {
     console.log(options.foo);   //=> 'bar'
 }

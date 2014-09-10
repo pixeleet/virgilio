@@ -30,7 +30,7 @@ deploy:
         code: |-
           gulp docs
           cd documentation
-          mv virgilio.html index.html
+          mv concordia.html index.html
           git config --global user.email $GITHUB_EMAIL
           git config --global user.name 'IcemobileLab'
           git init
