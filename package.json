@@ -32,7 +32,6 @@
   "devDependencies": {
     "gulp": "^3.8.7",
     "gulp-clean": "^0.3.1",
-    "gulp-concat": "^2.2.0",
     "gulp-docco": "0.0.4",
     "gulp-example-to-test": "^0.1.0",
     "gulp-help": "^0.1.6",

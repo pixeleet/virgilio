@@ -3,7 +3,6 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var docco = require('gulp-docco');
-var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
 var clean = require('gulp-clean');
