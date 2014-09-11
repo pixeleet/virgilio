@@ -11,6 +11,7 @@ No refactoring needed.
 
 * [Features](#features)
 * [Getting Started](#getting-started)
+* [Examples](https://github.com/ConcordiaJS/concordia/tree/master/examples)
 * [API Reference](https://github.com/concordiajs/concordia/wiki/API)
 * [Development](https://github.com/concordiajs/concordia/wiki/Development)
 * [More Tags](#more-tags)
