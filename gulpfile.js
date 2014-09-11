@@ -5,7 +5,7 @@ var mocha = require('gulp-mocha');
 var docco = require('gulp-docco');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
-var clean = require('gulp-clean');
+var rimraf = require('gulp-rimraf');
 var exampleToTest = require('gulp-example-to-test');
 var replace = require('gulp-replace');
 var insert = require('gulp-insert');
@@ -59,7 +59,7 @@ gulp.task('generate-example-tests', function() {
 
 gulp.task('clean-example-tests', function() {
     return gulp.src('./example-tests', { read: false })
-        .pipe(clean());
+        .pipe(rimraf());
 });
 
 gulp.task('unit-tests', function() {
@@ -70,19 +70,6 @@ gulp.task('unit-tests', function() {
             reporter: 'spec'
         }));
 });
-
-// gulp.task('coverage', 'Create istanbul code coverage report form tests',
-//             function(callback) {
-//     gulp.src(['lib/**/*.js', 'index.js'])
-//         .pipe(istanbul())
-//         .on('finish', function () {
-//             require('must');
-//             gulp.src(['./tests/**/*.test.js'])
-//                 .pipe(mocha())
-//                 .pipe(istanbul.writeReports())
-//                 .on('end', callback);
-//         });
-// });
 
 gulp.task('coverage', function(callback) {
     runSequence(

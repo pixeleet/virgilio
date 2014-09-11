@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "gulp": "^3.8.7",
-    "gulp-clean": "^0.3.1",
     "gulp-docco": "0.0.4",
     "gulp-example-to-test": "^0.1.0",
     "gulp-help": "^0.1.6",
@@ -40,6 +39,7 @@
     "gulp-jshint": "^1.6.1",
     "gulp-mocha": "^1.0.0",
     "gulp-replace": "^0.4.0",
+    "gulp-rimraf": "^0.1.0",
     "gulp-util": "^3.0.0",
     "jshint-stylish": "^0.4.0",
     "mocha": "^1.18.2",
