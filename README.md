@@ -3,6 +3,7 @@
 # Concordia
 [![wercker status](https://app.wercker.com/status/cda739f10bd52559975e497cbdbbe9c3/s/master "wercker status")](https://app.wercker.com/project/bykey/cda739f10bd52559975e497cbdbbe9c3)
 [![NPM version](https://badge.fury.io/js/concordia.svg)](http://badge.fury.io/js/concordia)
+[![Gitter chat](https://badges.gitter.im/ConcordiaJS/concordia.png)](https://gitter.im/ConcordiaJS/concordia.png)
 
 Concordia is a tiny framework helping you write modular applications.
 Start your project in a single file, then scale upwards as needed.
