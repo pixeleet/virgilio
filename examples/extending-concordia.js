@@ -2,9 +2,9 @@ var Concordia = require('../');
 var concordia = new Concordia();
 
 //Extending a concordia method.
-concordia.extend$('defineAction$', function(actionName, func) {
+concordia.extend$('defineAction$', function defineAction$(actionName, func) {
     var newActionName = 'super' + actionName;
-    return this.super$(newActionName, func);
+    return defineAction$.super$.call(this, newActionName, func);
 });
 
 //Calling an extended concordia method.
