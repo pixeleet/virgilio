@@ -1,7 +1,7 @@
 /* global describe, it, beforeEach */
 var Concordia = require('../');
 
-describe('Concordia.prototype.regsterError$()', function() {
+describe('Concordia.prototype.registerError$()', function() {
     var concordia = null;
     beforeEach(function() {
         concordia = new Concordia({
