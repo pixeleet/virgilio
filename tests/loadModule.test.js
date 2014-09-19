@@ -17,13 +17,13 @@ var Concordia = require('../');
 
 describe('Concordia.prototype.loadModule$()', function() {
     var concordia = null;
+    var concordiaOptions = {
+        logger: {
+            streams: []
+        }
+    };
     beforeEach(function() {
-        concordia = new Concordia({
-            logger: {
-                name: 'concordia',
-                streams: []
-            }
-        });
+        concordia = new Concordia(concordiaOptions);
     });
 
     it('loads a named module only once', function() {
@@ -37,6 +37,13 @@ describe('Concordia.prototype.loadModule$()', function() {
         executeCount.must.equal(1);
     });
 
+    it('gets access to the options object', function(done) {
+        concordia.loadModule$(function(moduleOptions) {
+            moduleOptions.must.be(concordiaOptions);
+            done();
+        });
+    });
+
     describe('it throws an error when loading an invalid module', function() {
         var nonModules = [{}, [1, 2], null, void(0), 'test', /test/];
         nonModules.forEach(function(nonModule) {
@@ -44,7 +51,7 @@ describe('Concordia.prototype.loadModule$()', function() {
                 var testFunction = function() {
                     concordia.loadModule$(nonModule);
                 };
-                testFunction.must.throw();
+                testFunction.must.throw(/called with invalid arguments/);
             });
         });
     });

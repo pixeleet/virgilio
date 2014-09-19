@@ -1,6 +1,6 @@
 {
   "name": "concordia",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Concordia, the next generation module bus",
   "main": "./lib/concordia.js",
   "directories": {

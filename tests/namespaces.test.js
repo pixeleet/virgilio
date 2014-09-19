@@ -6,7 +6,6 @@ describe('Concordia.prototype.namespace$()', function() {
     beforeEach(function() {
         concordia = new Concordia({
             logger: {
-                name: 'concordia',
                 streams: []
             }
         });
@@ -25,5 +24,29 @@ describe('Concordia.prototype.namespace$()', function() {
         concordia.foo.must.be.instanceof(Concordia);
         //concordia.foo.foo is an action.
         concordia.foo.foo.must.be.a.function();
+    });
+
+    it('will not overwrite with a namespace an existing property', function() {
+        function testFunc() {
+            concordia.foo = {};
+            concordia.namespace$('foo');
+        }
+        testFunc.must.throw(concordia.IllegalNamespaceError);
+    });
+
+    describe('Throws an error when called with wrong arguments', function() {
+        var testCases = [
+            [],
+            [{}],
+            [function() {}],
+        ];
+        testCases.forEach(function(args) {
+            function testFunc() {
+                concordia.namespace$.apply(concordia, args);
+            }
+            it('Called with ' + args.join(', '), function() {
+                testFunc.must.throw(/called with invalid arguments/);
+            });
+        });
     });
 });

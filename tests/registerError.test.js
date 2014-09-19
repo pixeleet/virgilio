@@ -6,7 +6,6 @@ describe('Concordia.prototype.registerError$()', function() {
     beforeEach(function() {
         concordia = new Concordia({
             logger: {
-                name: 'concordia',
                 streams: []
             }
         });
@@ -40,5 +39,29 @@ describe('Concordia.prototype.registerError$()', function() {
         error.stack.must.not.be.null();
         error.must.be.instanceof(Error);
         error.arg.must.be('test');
+    });
+
+    it('Cannot register an error with the same name twice', function() {
+        function testFunc() {
+            concordia.registerError$('FooError', function() {});
+            concordia.registerError$(function FooError() {});
+        }
+        testFunc.must.throw(concordia.DuplicateErrorRegistrationError);
+    });
+
+    describe('Throws an error when called with wrong arguments', function() {
+        var testCases = [
+            [],
+            [function() {}],
+            ['']
+        ];
+        testCases.forEach(function(args) {
+            function testFunc() {
+                concordia.registerError$.apply(concordia, args);
+            }
+            it('Called with ' + args.join(', '), function() {
+                testFunc.must.throw(/called with invalid arguments/);
+            });
+        });
     });
 });
