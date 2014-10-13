@@ -48,7 +48,7 @@ gulp.task('run-example-tests', function() {
 });
 
 gulp.task('generate-example-tests', function() {
-    return gulp.src('./examples/*.js')
+    return gulp.src('./examples/!(generators).js')
         .pipe(exampleToTest())
         .pipe(insert.prepend(exampleTestHeader))
         .pipe(replace(/Concordia\(\)/, 'Concordia({})'))
