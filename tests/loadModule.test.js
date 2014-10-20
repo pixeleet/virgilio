@@ -13,17 +13,17 @@
 // limitations under the License.
 
 /* global describe, it, beforeEach */
-var Concordia = require('../');
+var Virgilio = require('../');
 
-describe('Concordia.prototype.loadModule$()', function() {
-    var concordia = null;
-    var concordiaOptions = {
+describe('Virgilio.prototype.loadModule$()', function() {
+    var virgilio = null;
+    var virgilioOptions = {
         logger: {
             streams: []
         }
     };
     beforeEach(function() {
-        concordia = new Concordia(concordiaOptions);
+        virgilio = new Virgilio(virgilioOptions);
     });
 
     it('loads a named module only once', function() {
@@ -31,15 +31,15 @@ describe('Concordia.prototype.loadModule$()', function() {
         function testModule() {
             executeCount++;
         }
-        concordia
+        virgilio
             .loadModule$(testModule)
             .loadModule$(testModule);
         executeCount.must.equal(1);
     });
 
     it('gets access to the options object', function(done) {
-        concordia.loadModule$(function(moduleOptions) {
-            moduleOptions.must.be(concordiaOptions);
+        virgilio.loadModule$(function(moduleOptions) {
+            moduleOptions.must.be(virgilioOptions);
             done();
         });
     });
@@ -49,7 +49,7 @@ describe('Concordia.prototype.loadModule$()', function() {
         nonModules.forEach(function(nonModule) {
             it('throws an error when loading: ' + nonModule, function() {
                 var testFunction = function() {
-                    concordia.loadModule$(nonModule);
+                    virgilio.loadModule$(nonModule);
                 };
                 testFunction.must.throw(/called with invalid arguments/);
             });

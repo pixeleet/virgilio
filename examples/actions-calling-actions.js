@@ -1,8 +1,8 @@
-var Concordia = require('../');
-var concordia = new Concordia();
+var Virgilio = require('../');
+var virgilio = new Virgilio();
 
 //Defining actions through chaining.
-concordia
+virgilio
     .defineAction$(function add(num1, num2) {
         return num1 + num2;
     })
@@ -11,7 +11,7 @@ concordia
     });
 
 //Calling an action that calls another action.
-concordia.subtract(5, 2)
+virgilio.subtract(5, 2)
     .then(function(result) {
         console.log(result);    //=> 3
     });

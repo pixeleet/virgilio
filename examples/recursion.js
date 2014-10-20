@@ -1,8 +1,8 @@
-var Concordia = require('../');
-var concordia = new Concordia();
+var Virgilio = require('../');
+var virgilio = new Virgilio();
 
 //Defining and calling a recursive action.
-concordia.defineAction$('factorial', function(number) {
+virgilio.defineAction$('factorial', function(number) {
     if (number <= 1) {
         return 1;
     }
@@ -11,7 +11,7 @@ concordia.defineAction$('factorial', function(number) {
     });
 });
 
-concordia.factorial(3)
+virgilio.factorial(3)
     .then(function(result) {
         console.log(result);    //=> 6
     });

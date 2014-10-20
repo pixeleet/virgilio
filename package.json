@@ -1,8 +1,8 @@
 {
-  "name": "concordia",
+  "name": "virgilio",
   "version": "0.11.0",
-  "description": "Concordia, the next generation module bus",
-  "main": "./lib/concordia.js",
+  "description": "Virgilio, the next generation module bus",
+  "main": "./lib/virgilio.js",
   "directories": {
     "example": "examples"
   },
@@ -11,19 +11,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/concordiajs/concordia.git"
+    "url": "git://github.com/icemobilelab/virgilio.git"
   },
   "author": "Icemobile BV",
   "licenses": [
     {
       "type": "Apache-2.0",
-      "url": "http://github.com/concordiajs/concordia/raw/master/LICENSE"
+      "url": "http://github.com/icemobilelab/virgilio/raw/master/LICENSE"
     }
   ],
   "bugs": {
-    "url": "https://github.com/concordiajs/concordia/issues"
+    "url": "https://github.com/icemobilelab/virgilio/issues"
   },
-  "homepage": "https://github.com/concordiajs/concordia",
+  "homepage": "https://github.com/icemobilelab/virgilio",
   "dependencies": {
     "bluebird": "^2.3.0",
     "bunyan": "^1.0.0",

@@ -1,10 +1,10 @@
 /* global describe, it, beforeEach */
-var Concordia = require('../');
+var Virgilio = require('../');
 
-describe('Concordia.prototype.registerError$()', function() {
-    var concordia = null;
+describe('Virgilio.prototype.registerError$()', function() {
+    var virgilio = null;
     beforeEach(function() {
-        concordia = new Concordia({
+        virgilio = new Virgilio({
             logger: {
                 streams: []
             }
@@ -12,18 +12,18 @@ describe('Concordia.prototype.registerError$()', function() {
     });
 
     it('Can create an error with just a name', function() {
-        concordia.registerError$('FooError');
-        var error = new concordia.FooError('test');
+        virgilio.registerError$('FooError');
+        var error = new virgilio.FooError('test');
         error.name.must.be('FooError');
         error.stack.must.not.be.null();
         error.must.be.instanceof(Error);
     });
 
     it('Can create an error with a named function', function() {
-        concordia.registerError$(function FooError(arg) {
+        virgilio.registerError$(function FooError(arg) {
             this.arg = arg;
         });
-        var error = new concordia.FooError('test');
+        var error = new virgilio.FooError('test');
         error.name.must.be('FooError');
         error.stack.must.not.be.null();
         error.must.be.instanceof(Error);
@@ -31,10 +31,10 @@ describe('Concordia.prototype.registerError$()', function() {
     });
 
     it('Can create an error with a name and init function', function() {
-        concordia.registerError$('FooError', function errorInit(arg) {
+        virgilio.registerError$('FooError', function errorInit(arg) {
             this.arg = arg;
         });
-        var error = new concordia.FooError('test');
+        var error = new virgilio.FooError('test');
         error.name.must.be('FooError');
         error.stack.must.not.be.null();
         error.must.be.instanceof(Error);
@@ -43,10 +43,10 @@ describe('Concordia.prototype.registerError$()', function() {
 
     it('Cannot register an error with the same name twice', function() {
         function testFunc() {
-            concordia.registerError$('FooError', function() {});
-            concordia.registerError$(function FooError() {});
+            virgilio.registerError$('FooError', function() {});
+            virgilio.registerError$(function FooError() {});
         }
-        testFunc.must.throw(concordia.DuplicateErrorRegistrationError);
+        testFunc.must.throw(virgilio.DuplicateErrorRegistrationError);
     });
 
     describe('Throws an error when called with wrong arguments', function() {
@@ -57,7 +57,7 @@ describe('Concordia.prototype.registerError$()', function() {
         ];
         testCases.forEach(function(args) {
             function testFunc() {
-                concordia.registerError$.apply(concordia, args);
+                virgilio.registerError$.apply(virgilio, args);
             }
             it('Called with ' + args.join(', '), function() {
                 testFunc.must.throw(/called with invalid arguments/);

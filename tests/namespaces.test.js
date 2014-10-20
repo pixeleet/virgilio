@@ -1,10 +1,10 @@
 /* global describe, it, beforeEach */
-var Concordia = require('../');
+var Virgilio = require('../');
 
-describe('Concordia.prototype.namespace$()', function() {
-    var concordia = null;
+describe('Virgilio.prototype.namespace$()', function() {
+    var virgilio = null;
     beforeEach(function() {
-        concordia = new Concordia({
+        virgilio = new Virgilio({
             logger: {
                 streams: []
             }
@@ -12,26 +12,26 @@ describe('Concordia.prototype.namespace$()', function() {
     });
 
     it('can reuse names in a namespace-chain', function() {
-        concordia.namespace$('foo.foo');
-        concordia.foo.foo.must.exist();
-        concordia.foo.must.not.be(concordia.foo.foo);
+        virgilio.namespace$('foo.foo');
+        virgilio.foo.foo.must.exist();
+        virgilio.foo.must.not.be(virgilio.foo.foo);
     });
 
     it('can give an action the name of a namespce', function() {
-        concordia.namespace$('foo').defineAction$('foo', function() {});
-        concordia.foo.foo.must.exist();
-        //concordia.foo is a namespace.
-        concordia.foo.must.be.instanceof(Concordia);
-        //concordia.foo.foo is an action.
-        concordia.foo.foo.must.be.a.function();
+        virgilio.namespace$('foo').defineAction$('foo', function() {});
+        virgilio.foo.foo.must.exist();
+        //virgilio.foo is a namespace.
+        virgilio.foo.must.be.instanceof(Virgilio);
+        //virgilio.foo.foo is an action.
+        virgilio.foo.foo.must.be.a.function();
     });
 
     it('will not overwrite with a namespace an existing property', function() {
         function testFunc() {
-            concordia.foo = {};
-            concordia.namespace$('foo');
+            virgilio.foo = {};
+            virgilio.namespace$('foo');
         }
-        testFunc.must.throw(concordia.IllegalNamespaceError);
+        testFunc.must.throw(virgilio.IllegalNamespaceError);
     });
 
     describe('Throws an error when called with wrong arguments', function() {
@@ -42,7 +42,7 @@ describe('Concordia.prototype.namespace$()', function() {
         ];
         testCases.forEach(function(args) {
             function testFunc() {
-                concordia.namespace$.apply(concordia, args);
+                virgilio.namespace$.apply(virgilio, args);
             }
             it('Called with ' + args.join(', '), function() {
                 testFunc.must.throw(/called with invalid arguments/);

@@ -21,9 +21,9 @@ deploy:
         code: |-
           gulp docs
           cd documentation
-          mv concordia.html index.html
+          mv virgilio.html index.html
           git config --global user.email $GITHUB_EMAIL
-          git config --global user.name 'Concordia'
+          git config --global user.name 'Virgilio'
           git init
           git add .
           git commit -m "Publishing annotated source code."
