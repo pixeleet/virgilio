@@ -1,171 +1,57 @@
-<a href="https://github.com/icemobilelab/virgilio"><img src="https://raw.githubusercontent.com/icemobilelab/virgilio/master/images/virgilio.png" align="center"  height="300" width="600"/></a>
+<a href="https://github.com/concordiajs/concordia"><img src="https://raw.githubusercontent.com/concordiajs/concordia/master/images/concordia.png" align="center"  height="300" width="600"/></a>
 
-# Virgilio
-[![wercker status](https://app.wercker.com/status/69a7f421e9d59612238df4e8af206558/s/master "wercker status")](https://app.wercker.com/project/bykey/69a7f421e9d59612238df4e8af206558)
-[![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio/coverage.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Dependency Status](https://gemnasium.com/icemobilelab/virgilio.svg)](https://gemnasium.com/icemobilelab/virgilio)
-[![NPM version](https://badge.fury.io/js/virgilio.svg)](http://badge.fury.io/js/virgilio)
-[more tags](#more-tags)
+# Concordia
+[![wercker status](https://app.wercker.com/status/cda739f10bd52559975e497cbdbbe9c3/s/master "wercker status")](https://app.wercker.com/project/bykey/cda739f10bd52559975e497cbdbbe9c3)
+[![NPM version](https://badge.fury.io/js/concordia.svg)](http://badge.fury.io/js/concordia)
+[![Gitter chat](https://badges.gitter.im/ConcordiaJS/concordia.png)](https://gitter.im/ConcordiaJS/concordia)
 
-Virgilio is a tiny framework helping you to write modular code.
-Its philosophy can be summarized in a couple of points.
+Concordia is a tiny framework helping you write modular applications.
+Start your project in a single file, then scale upwards as needed.
+No refactoring needed.
 
-**Register once, call anywhere**
+* [Features](#features)
+* [Getting Started](#getting-started)
+* [Examples](https://github.com/ConcordiaJS/concordia/tree/master/examples)
+* [API Reference](https://github.com/concordiajs/concordia/wiki/API)
+* [Development](https://github.com/concordiajs/concordia/wiki/Development)
+* [More Tags](#more-tags)
 
-Call functions registered with Virgilio (actions) anywhere, without needing to
-know where they are defined. This creates a flat dependency tree in even the most complex projects.
+## Features
 
-Virgilio makes it easy to start your project in a single file, then restructure
-your code as you go.
+### Focus on writing code - not organising code
+Build your application out of actions, small functions with a specific responsibility.
+Move your actions about the project as development progresses without having to  wory about having to refactor.
+Use namespaces to oranise your actions, and rest save in the knowledge that they will always return a promise.
 
-**Tiny core, easily extendable**
+### Extend it in any way you like
+At less than a 100 lines of actual code, the main library is tiny and we aim to keep it that way.
+Additional functionality goes into extensions, which you are free to use or not use as you see fit.
+Mix Concordia-extensions with your own favourite libraries any way you want.
 
-Virgilio facilitates communication between components of your application.
-That's it. Additional functionality goes into optional extensions.
+## Getting Started
+Get Concordia from npm.
 
-Virgilio is easy to pick up because there isn't a lot to learn.
+```js
+npm install concordia
+```
 
-**Developers first**
+Then start defining actions.
 
-Virgilio is build with a single question in mind: How would a developer like to
-use it.
+```js
+Concordia = require('concordia');
+var concordia = new Concordia();
+concordia.defineAction$('number.add', function add(num1, num2) {
+    return num1 + num2;
+});
 
-That's why promises are a part of virgilio.
-
-## Versioning
-This project mostly follows semantic versioning.
-
-Until the library reaches version 1.0, changes to the public API will always carry a minor version bump, such as going from 0.7.2 to 0.8.0. Patch releases (e.g. 0.8.0 -> 0.8.1) may introduce new features that don't break the public API.
-
-## Getting started
-The following creates a Virglio instance and tells it to load the number module.
-
-    var options = {};
-    require('virgilio')(options)
-        .loadModule(number);
-
-Below is an example of what a number module might look like.
-
-    function number(options) {
-        var virgilio = this;
-        virgilio.namespace('number')
-            .defineAction('add', add)
-            .defineAction('subtract', subtract);
-
-        function add(num1, num2) {
-            return (num1 + num2);
-        }
-
-        function subtract(num1, num2) {
-            var virgilio = this;
-            return virgilio.execute('number.add', num1, -num2);
-        }
-    }
-
-Then somewhere else, you might call:
-
-    virgilio.execute('number.subtract', 8, 3)
-        .then(function(result) {
-            console.log(result) //5
-        }).done();
-
-## API
-### Virgilio( [options] )
-Create a virgilio instance.
-The optional options object is shared among all registered modules.
-
-### virgilio.loadModule( module )
-Load a module.
-A virgilio module is a function that takes a single options argument.
-The function is bound to the virgilio instance and instantly called.
-
-### virgilio.defineAction( actionName, actionHandler )
-Register an action with virgilio.
-The `actionName` is automatically scoped to the namespace it was called from.
-
-### virgilio.execute( actionName [, arg1, arg2, ...])
-Execute an action with certain arguments.
-`actionName` is automatically scoped to the namespace it was called from.
-
-`execute` always returns a promise for the result of the action, even if the action itself directly returns a value!
-If nothing responds within 100ms, this promise is rejected with a TimeoutError.
-If you want to wait for longer, you can specify your own timeout:
-
-    virgilio.execute('foo')
-        .withTimeout(2000) //Wait for 2 seconds before failing.
-        .then( ... );
-
-Make sure you chain `withTimeout` directly after the execute call.
-
-### virgilio.subscribe( actionName, handler )
-Register a subscriber with virgilio.
-A subscriber is like an action, but passive: it does not return a value.
-You can safely have multiple subscribers for the same action name (but only a single action).
-
-### virgilio.publish( actionName [, arg1, arg2, ...])
-Like `virgilio.execute()`, apart from the fact that publish won't return a value.
-
-### virgilio.namespace( name )
-Get a reference to a certain namespace.
-If it doesn't exist, it is created for you.
-The returned namespace-object proxies all virgilio methods.
-This method allows you to write:
-
-    virgilio.defineAction('foo.bar.sub.run')
-            .defineAction('foo.bar.sub.stop');
-
-as:
-
-    virgilio.namespace('foo.bar.sub')
-        .defineAction('run')
-        .defineAction('stop');
-
-### virgilio.log
-A bunyan instance to use for logging.
-For instance:
-
-    virgilio.log.info('Everything running smoothly!');
-    virgilio.log.error('Ouch');
-
-## Options
-The options object passed to Virgilio is shared with all modules and can thus be used for configuring the entire app.
-Virgilio itself reads only the logger property:
-
-    var options = {
-        logger: { level: 10, name: 'virgilio' }, //defaults
-        timeout: 1000, //default
-        passThrough: true //default
-    }
-
-To see what options the logger supports, check out the [bunyan documentation](https://github.com/trentm/node-bunyan/blob/master/README.md).
-
-The `timeout` option determines the maximum amount of ms that `virgilio.execute()` will wait for a response.
-
-The `passThrough` option determines whether requests to the virgilio instance are immediately handled by that isntance.
-Ordinarily, this is what you want. However, when having a cluster of virgilio instances working together,
-you might want to centralize message handling and set this option to false.
-
-## Development
-
-### Extending Virgilio
-To extend the base methods of virgilio, either by adding new ones or overwriting
-existing ones, use `virgilio.extend`:
-
-    virgilio.extend('defineAction', function(args, _super) {
-        //do something here
-        _super.apply(this, args);
-    }
-
-The `_super` argument will only be defined when overwriting an existing method.
-
-### Gulp
-The Virgilio project comes with a couple of [gulp](http://gulpjs.com/) tasks:
-
-- `gulp help` generate a fancy help message
-- `gulp test` runs all tests.
-- `gulp coverage` create the code coverage report in the `coverage/` directory.
-- `gulp docs` generates the annotated sourcecode webpage in the `docs/` directory.
+Concordia.number.add(3, 6).then(function(result) {
+    console.log(result);    //=> 9
+});
+```
 
 ## More tags
-[![Code Climate](https://codeclimate.com/github/icemobilelab/virgilio.png)](https://codeclimate.com/github/icemobilelab/virgilio) [![Stuff to do](https://badge.waffle.io/icemobilelab/virgilio.png?label=ready&title=Ready)](https://waffle.io/icemobilelab/virgilio)
+[![Code Climate](https://codeclimate.com/github/ConcordiaJS/concordia/badges/gpa.svg)](https://codeclimate.com/github/ConcordiaJS/concordia)
+[![Test Coverage](https://codeclimate.com/github/ConcordiaJS/concordia/badges/coverage.svg)](https://codeclimate.com/github/ConcordiaJS/concordia)
+[![Dependency Status](https://gemnasium.com/ConcordiaJS/concordia.svg)](https://gemnasium.com/ConcordiaJS/concordia)
 
 We dedicate this Library to the ServiceRegistrar, the EigenServices and the PuppetDresser.

@@ -15,6 +15,6 @@
     "unused": true,
     "trailing": true,
     "maxlen": 80,
-
-    "node": true
+    "node": true,
+    "predef": [ "suite", "test" ]
 }

@@ -1,8 +1,8 @@
 {
-  "name": "virgilio",
-  "version": "0.6.2",
-  "description": "Virgilio, the next generation module bus",
-  "main": "./lib/virgilio.js",
+  "name": "concordia",
+  "version": "0.11.0",
+  "description": "Concordia, the next generation module bus",
+  "main": "./lib/concordia.js",
   "directories": {
     "example": "examples"
   },
@@ -11,36 +11,40 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/icemobilelab/virgilio.git"
+    "url": "git://github.com/concordiajs/concordia.git"
   },
   "author": "Icemobile BV",
   "licenses": [
     {
       "type": "Apache-2.0",
-      "url": "http://github.com/icemobilelab/virgilio/raw/master/LICENSE"
+      "url": "http://github.com/concordiajs/concordia/raw/master/LICENSE"
     }
   ],
   "bugs": {
-    "url": "https://github.com/icemobilelab/virgilio/issues"
+    "url": "https://github.com/concordiajs/concordia/issues"
   },
-  "homepage": "https://github.com/icemobilelab/virgilio",
+  "homepage": "https://github.com/concordiajs/concordia",
   "dependencies": {
-    "bluebird": "^1.2.4",
-    "bunyan": "^0.22.3",
+    "bluebird": "^2.3.0",
+    "bunyan": "^1.0.0",
     "node-uuid": "^1.4.1"
   },
   "devDependencies": {
-    "event-stream": "^3.1.5",
-    "gulp": "^3.6.2",
-    "gulp-concat": "^2.2.0",
+    "gulp": "^3.8.7",
     "gulp-docco": "0.0.4",
-    "gulp-exit": "0.0.2",
+    "gulp-example-to-test": "^0.1.0",
     "gulp-help": "^0.1.6",
+    "gulp-insert": "^0.4.0",
     "gulp-istanbul": "^0.2.0",
     "gulp-jshint": "^1.6.1",
-    "gulp-mocha": "^0.4.1",
-    "jshint-stylish": "^0.2.0",
+    "gulp-mocha": "^1.0.0",
+    "gulp-replace": "^0.4.0",
+    "gulp-rimraf": "^0.1.0",
+    "gulp-util": "^3.0.0",
+    "jshint-stylish": "^0.4.0",
     "mocha": "^1.18.2",
-    "must": "^0.11.0"
+    "must": "^0.12.0",
+    "run-sequence": "^0.3.6",
+    "underscore": "^1.6.0"
   }
 }

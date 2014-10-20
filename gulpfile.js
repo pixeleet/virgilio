@@ -1,40 +1,98 @@
+var fs = require('fs');
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var docco = require('gulp-docco');
-var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
-var exit = require('gulp-exit');
+var rimraf = require('gulp-rimraf');
+var exampleToTest = require('gulp-example-to-test');
+var replace = require('gulp-replace');
+var insert = require('gulp-insert');
+var runSequence = require('run-sequence');
+
+function onError(error) {
+    gutil.log(error);
+    process.exit(1);
+}
 
 // Help module
 require('gulp-help')(gulp);
 
-gulp.task('test', 'Run the application tests', function () {
+var newConcordiaRegex = /^(.*Concordia\()(.*)(\).*)$/m;
+var exampleTestHeader = fs.readFileSync('./helpers/example-test-header.js');
+
+gulp.task('test', function(callback) {
+    runSequence(
+        'unit-tests',
+        'example-tests',
+        callback
+    );
+});
+
+gulp.task('example-tests', function(callback) {
+    runSequence(
+        'clean-example-tests',
+        'generate-example-tests',
+        'run-example-tests',
+        callback
+    );
+});
+
+gulp.task('run-example-tests', function() {
+    return gulp.src('./example-tests/*.js')
+        .pipe(mocha({
+            ui: 'qunit',
+            reporter: 'spec'
+        }));
+});
+
+gulp.task('generate-example-tests', function() {
+    return gulp.src('./examples/!(generators).js')
+        .pipe(exampleToTest())
+        .pipe(insert.prepend(exampleTestHeader))
+        .pipe(replace(/Concordia\(\)/, 'Concordia({})'))
+        .pipe(replace(newConcordiaRegex, '$1_.extend(loggerConfig, $2)$3'))
+        .on('error', onError)
+        .pipe(gulp.dest('./example-tests'));
+});
+
+gulp.task('clean-example-tests', function() {
+    return gulp.src('./example-tests', { read: false })
+        .pipe(rimraf());
+});
+
+gulp.task('unit-tests', function() {
     // Modules used in tests must be loaded in this task
     require('must');
-    gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
+    return gulp.src(['./tests/**/*.test.js'])
         .pipe(mocha({
             reporter: 'spec'
-        }))
-        .pipe(exit());
+        }));
 });
 
-gulp.task('coverage', 'Create istanbul code coverage report form tests',
-            function (cb) {
+gulp.task('coverage', function(callback) {
+    runSequence(
+        'setup-istanbul',
+        'test',
+        'report-istanbul',
+        callback
+    );
+});
+
+gulp.task('setup-istanbul', function(callback) {
     gulp.src(['lib/**/*.js', 'index.js'])
         .pipe(istanbul())
-        .on('finish', function () {
-            var must = require('must');
-            gulp.src(['./examples/**/*.test.js', './tests/**/*.test.js'])
-                .pipe(mocha())
-                .pipe(istanbul.writeReports())
-                .on('end', cb);
-        });
+        .on('finish', callback);
 });
 
-gulp.task('docs', 'Build the documentation', function () {
-    gulp.src(['lib/virgilio.js', 'lib/mediator.js'])
-        .pipe(concat('virgilio.js'))
+gulp.task('report-istanbul', function() {
+    return gulp.src(['lib/**/*.js', 'index.js'])
+        .pipe(istanbul.writeReports());
+});
+
+gulp.task('docs', 'Build the documentation', function() {
+    gulp.src('lib/concordia.js')
         .pipe(docco())
         .pipe(gulp.dest('./documentation'));
 });
