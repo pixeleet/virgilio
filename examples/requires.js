@@ -17,5 +17,5 @@ virgilio.shareRequire$(module.exports.asd = function asd() {
 var test1 = virgilio.require$.foo();
 var test2 = virgilio.require$.asd();
 
-assert(test1 === 'foo');
-assert(test2 === 'asd');
+console.log(test1);
+console.log(test2);
