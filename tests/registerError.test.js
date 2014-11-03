@@ -41,6 +41,13 @@ describe('Virgilio.prototype.registerError$()', function() {
         error.arg.must.be('test');
     });
 
+    it('Can create an error that extends another error', function() {
+        function BaseError() {}
+        virgilio.registerError$('FooError', null, BaseError);
+        var error = new virgilio.FooError();
+        error.must.be.instanceof(BaseError);
+    });
+
     it('Cannot register an error with the same name twice', function() {
         function testFunc() {
             virgilio.registerError$('FooError', function() {});
