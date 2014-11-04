@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>virgilio.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="virgilio-js">virgilio.js</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Bunyan is the logging framework we use.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> bunyan = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bunyan'</span>);
+<span class="hljs-keyword">var</span> Promise = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bluebird'</span>);
+<span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./util'</span>);
+<span class="hljs-keyword">var</span> errors = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./errors'</span>);
+<span class="hljs-keyword">var</span> EventEmitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>).EventEmitter;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h2 id="setup">Setup</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Virgilio is meant to be very hackable.
+To prevent accidental overwrites, all internal variables end with a <code>$</code>-sign.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Virgilio = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Virgilio</span><span class="hljs-params">(options)</span> </span>{
+    <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">this</span> <span class="hljs-keyword">instanceof</span> Virgilio)) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Virgilio(options);
+    }
+    EventEmitter.call(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.options$ = options = options || {};
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'Virgilio'</span>, <span class="hljs-string">'options'</span>, options, <span class="hljs-string">'object'</span>);
+    <span class="hljs-keyword">var</span> logOptions = options.logger || {};
+    logOptions.level = logOptions.level || <span class="hljs-number">10</span>;
+    logOptions.name = logOptions.name || <span class="hljs-string">'virgilio'</span>;
+    <span class="hljs-keyword">this</span>.log$ = bunyan.createLogger(logOptions);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>This will come to contain an array of all loaded modules.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.loadedModules$ = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Keep a reference to this base instance. Usefull when trying to extend it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.baseVirgilio$ = <span class="hljs-keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Set the path of this (the base virgilio) namespace.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.path$ = <span class="hljs-string">'virgilio'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p><strong>requires</strong> allows to distribute to all modules the global requires.
+In this way we can require modules during initialization and then access
+to them without requiring them in every submodule.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.require$ = {
+        bunyan: bunyan,
+        bluebird: Promise
+    };
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Make virgilio an EventEmitter.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>).inherits(Virgilio, EventEmitter);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Make the promise library we use available across the application.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.Promise = Promise;
+Virgilio.prototype.util$ = util;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Put all custom errors directly on the prototype.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>util.extend(Virgilio.prototype, errors);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h2 id="base-methods">Base methods</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p><strong>loadModule</strong> expects a direct reference to a Virgilio module.
+A Virgilio module is a function, which receives a single options object
+as argument and is bound to a virgilio instance (or namespace).
+A module’s name is determined by the functions name.
+Only a single module with a certain name may be loaded.
+There is no limit on the amount of anonymous modules that may be loaded.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.loadModule$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadModule$</span><span class="hljs-params">(module)</span> </span>{
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'loadModule$'</span>, <span class="hljs-string">'module'</span>, <span class="hljs-built_in">module</span>, <span class="hljs-string">'function'</span>);
+    <span class="hljs-keyword">var</span> moduleName = <span class="hljs-built_in">module</span>.name;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.loadedModules$[moduleName]) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>This module is already loaded. Don’t load it again.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.log$.info(<span class="hljs-string">'Module `%s` already loaded.'</span>, moduleName);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (moduleName) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Save the module name, to prevent it from being loaded again.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.log$.info(<span class="hljs-string">'Loading module: %s'</span>, moduleName);
+        <span class="hljs-keyword">this</span>.loadedModules$[moduleName] = <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-built_in">module</span>.call(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.options$);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>The handler passed to <strong>defineAction</strong> can be any function.
+This function can return a value or a promise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.defineAction$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">defineAction$</span><span class="hljs-params">(path, handler)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path === <span class="hljs-string">'function'</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>We’re receiving a named function as single argument.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        handler = path;
+        path = handler.name;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Check that path is a non-empty string, and handler a function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'defineAction$'</span>, <span class="hljs-string">'path'</span>, path || <span class="hljs-literal">null</span>, <span class="hljs-string">'string'</span>);
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'defineAction$'</span>, <span class="hljs-string">'handler'</span>, handler, <span class="hljs-string">'function'</span>);
+    <span class="hljs-keyword">var</span> namespaceStack = path.split(<span class="hljs-string">'.'</span>);
+    <span class="hljs-keyword">var</span> actionName = namespaceStack.pop();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Get the namespace onto which the action is added.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> baseNamespace = <span class="hljs-keyword">this</span>.namespace$(namespaceStack.join(<span class="hljs-string">'.'</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Create a new namespace used as a context for the action itself.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    baseNamespace._createAction$(actionName, handler);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Create an action on the current namespace.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype._createAction$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_createAction$</span><span class="hljs-params">(name, handler)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Create a new namespace used as a context for the action itself.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> actionNamespace = <span class="hljs-keyword">this</span>._createNamespace$(name);
+    <span class="hljs-keyword">var</span> boundHandler = handler.bind(actionNamespace);
+    <span class="hljs-keyword">var</span> action = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">if</span> (handler.constructor.name === <span class="hljs-string">'GeneratorFunction'</span>) {
+        action = Promise.coroutine(boundHandler);
+    }
+    <span class="hljs-keyword">else</span> {
+        action = <span class="hljs-keyword">this</span>.Promise.method(boundHandler);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>The action can call itself recursively using <code>this.execute$()</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    actionNamespace.execute$ = action;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Keep a reference to the action namespace for hacking.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    action.namespace$ = actionNamespace;
+    <span class="hljs-keyword">this</span>[name] = action;
+    <span class="hljs-keyword">return</span> action;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <h2 id="namespaces">Namespaces</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Namespace instances are proxies for the origin virgilio instance.
+The createNamespace$ function creates them and sets their prototype to their
+parent namespace.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Namespace = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Namespace</span><span class="hljs-params">(parent, name)</span> </span>{
+    <span class="hljs-keyword">this</span>.path$ = parent.path$ + (name ? (<span class="hljs-string">'.'</span> + name) : <span class="hljs-string">''</span>);
+    <span class="hljs-keyword">this</span>.parent$ = parent;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Create a bunyan childlogger for this namespace,
+to automatically contextualize all logging.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.log$ = <span class="hljs-keyword">this</span>.log$.child({ context: <span class="hljs-keyword">this</span>.path$ });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p><strong>namespace</strong> returns a namespace instance belonging to a path.
+If that namespace doesn’t exist, it is created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.namespace$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">namespace$</span><span class="hljs-params">(path)</span> </span>{
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'namespace$'</span>, <span class="hljs-string">'path'</span>, path, <span class="hljs-string">'string'</span>);
+    <span class="hljs-keyword">if</span> (!path) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Return the current namespace.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+    <span class="hljs-keyword">var</span> namespaceStack = path.split(<span class="hljs-string">'.'</span>).reverse();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Get the head of the namespace stack. This is not always a child of <code>this</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> name = namespaceStack.pop();
+    <span class="hljs-keyword">var</span> namespace = <span class="hljs-keyword">this</span>._getNamespace$(name) || <span class="hljs-keyword">this</span>._createNamespace$(name);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Follow the namespace stack, each element a child of the previous element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">while</span> ((name = namespaceStack.pop())) {
+        namespace = namespace._getChildNamespace$(name) ||
+                                    namespace._createNamespace$(name);
+    }
+    <span class="hljs-keyword">return</span> namespace;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p><strong>_getNamespace</strong> returns a namespace instance belonging to a single name.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype._getNamespace$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getNamespace$</span><span class="hljs-params">(name)</span> </span>{
+    <span class="hljs-keyword">var</span> namespace = <span class="hljs-keyword">this</span>[name];
+    <span class="hljs-keyword">var</span> isNamespace = (namespace <span class="hljs-keyword">instanceof</span> Virgilio);
+    <span class="hljs-keyword">return</span> isNamespace ? namespace : <span class="hljs-literal">null</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p><strong>_getChildNamespace</strong> returns a namespace instance belonging to a single
+name, but only if that namespace is a direct child of the current namespace.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype._getChildNamespace$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_getChildNamespace$</span><span class="hljs-params">(name)</span> </span>{
+    <span class="hljs-keyword">var</span> namespace = <span class="hljs-keyword">this</span>._getNamespace$(name);
+    <span class="hljs-keyword">var</span> isChild = <span class="hljs-keyword">this</span>.hasOwnProperty(name);
+    <span class="hljs-keyword">var</span> isChildNamespace = (namespace &amp;&amp; isChild);
+    <span class="hljs-keyword">return</span> isChildNamespace ? namespace : <span class="hljs-literal">null</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p><strong>createNamespace</strong> creates a namespace instance with the provided name in the
+current namespace.
+If no name is provided, the current namespace will be cloned.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype._createNamespace$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_createNamespace$</span><span class="hljs-params">(name)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Check we’re not overwriting an existing property.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.hasOwnProperty(name)) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">this</span>.IllegalNamespaceError(<span class="hljs-keyword">this</span>.path$, name);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Let the namespace instance inherit virgilio’s methods.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Namespace.prototype = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">var</span> namespace = <span class="hljs-keyword">new</span> Namespace(<span class="hljs-keyword">this</span>, name);
+    <span class="hljs-keyword">if</span> (name) {
+        <span class="hljs-keyword">this</span>[name] = namespace;
+    }
+    <span class="hljs-keyword">return</span> namespace;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <h2 id="extension-methods">Extension methods</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p><strong>extend</strong> allows users to extend virgilio’s default methods.
+It is called with the name of the method to extend and a replacement method.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.extend$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">extend$</span><span class="hljs-params">(methodName, replacementMethod)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> methodName === <span class="hljs-string">'function'</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>We’re receiving a named function as single argument.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        replacementMethod = methodName;
+        methodName = replacementMethod.name;
+    }
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'extend$'</span>, <span class="hljs-string">'methodName'</span>, methodName || <span class="hljs-literal">null</span>,
+                           <span class="hljs-string">'string'</span>);
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'extend$'</span>, <span class="hljs-string">'replacementMethod'</span>, replacementMethod,
+                           <span class="hljs-string">'function'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Store a reference to the super method.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> superMethod = <span class="hljs-keyword">this</span>[methodName];
+    replacementMethod.super$ = superMethod;
+    <span class="hljs-keyword">this</span>[methodName] = replacementMethod;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p><strong>shareRequire$</strong> add a provided required package to the virgilio’s requires</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.shareRequire$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shareRequire</span><span class="hljs-params">(name, package)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> name === <span class="hljs-string">'function'</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>We’re receiving a named function as single argument.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        package = name;
+        name = package.name;
+    }
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> package === <span class="hljs-string">'function'</span> || <span class="hljs-keyword">typeof</span> package === <span class="hljs-string">'object'</span>) {
+        <span class="hljs-keyword">var</span> sharedPackage = <span class="hljs-keyword">this</span>.require$[name];
+        <span class="hljs-keyword">if</span> (!sharedPackage) {
+            sharedPackage = package;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">this</span>.baseVirgilio$.log$.info(<span class="hljs-string">'Module %s is already registered'</span>,
+                                         name);
+        }
+
+        <span class="hljs-keyword">this</span>.require$[name] = sharedPackage;
+    }
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Add custom errors</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.prototype.registerError$ = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">registerError$</span><span class="hljs-params">(name, init)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> name === <span class="hljs-string">'function'</span>) {
+        init = name;
+        name = init.name;
+    }
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'registerError$'</span>, <span class="hljs-string">'name'</span>, name || <span class="hljs-literal">null</span>, <span class="hljs-string">'string'</span>);
+    <span class="hljs-keyword">this</span>.util$.validateArg(<span class="hljs-string">'registerError$'</span>, <span class="hljs-string">'init'</span>, init,
+                           [<span class="hljs-string">'function'</span>, <span class="hljs-string">'undefined'</span>]);
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.baseVirgilio$[name]) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">this</span>.DuplicateErrorRegistrationError(name);
+    }
+    <span class="hljs-keyword">this</span>.baseVirgilio$[name] = util.createCustomError(name, init);
+};
+
+<span class="hljs-built_in">module</span>.exports = Virgilio;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Make the libraries we use available externally.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Virgilio.bluebird = Promise;
+Virgilio.bunyan = bunyan;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
