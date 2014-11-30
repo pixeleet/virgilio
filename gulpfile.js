@@ -1,11 +1,12 @@
 var fs = require('fs');
+var del = require('del');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var docco = require('gulp-docco');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
-var rimraf = require('gulp-rimraf');
+var vinylPaths = require('vinyl-paths');
 var exampleToTest = require('gulp-example-to-test');
 var replace = require('gulp-replace');
 var insert = require('gulp-insert');
@@ -59,7 +60,7 @@ gulp.task('generate-example-tests', function() {
 
 gulp.task('clean-example-tests', function() {
     return gulp.src('./example-tests', { read: false })
-        .pipe(rimraf());
+        .pipe(vinylPaths(del));
 });
 
 gulp.task('unit-tests', function() {
