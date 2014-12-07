@@ -28,6 +28,23 @@ describe('Virgilio.prototype.extend$()', function() {
         virgilio.namespace$('bar').must.equal(virgilio.foo.bar);
     });
 
+    it('Cannot override everything', function() {
+        var illegalExtension = function() {
+            virgilio.extend$("foo", function(){} );
+        };
+        virgilio.namespace$('foo');
+        illegalExtension.must.throw(virgilio.UnexpectedExtensionError);
+    });
+
+
+    it('Cannot override non-prototype functions', function() {
+        var illegalExtension = function() {
+            virgilio.extend$("foo", function(){} );
+        };
+        virgilio.foo = function() {};
+        illegalExtension.must.throw(virgilio.UnexpectedExtensionError);
+    });
+
     describe('Throws an error when called with wrong arguments', function() {
         var testCases = [
             [],
