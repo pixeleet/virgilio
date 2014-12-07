@@ -34,6 +34,54 @@ describe('Virgilio.prototype.namespace$()', function() {
         testFunc.must.throw(virgilio.IllegalNamespaceError);
     });
 
+    describe('Test namespace validator', function() {
+
+        it('can use simple words as a namespace', function() {
+            var validator = virgilio.util$.validateNamespaceName;
+            validator('foo').must.be.true();
+            validator('f').must.be.true();
+        });
+
+        it('can use valid namespace', function() {
+            var validator = virgilio.util$.validateNamespaceName;
+
+            validator("foo.bar").must.be.true();
+            validator("foo.bar.baz").must.be.true();
+            validator("f.b").must.be.true();
+            validator("f.b.b").must.be.true();
+        });
+
+        it('cannot be empty namespace', function() {
+            var validator = virgilio.util$.validateNamespaceName,
+                wrapper = function(path) {
+                    return function() {
+                        return validator(path);
+                    }
+                };
+
+            wrapper("").must.throw(/^Invalid namespace name .*/);
+            wrapper(" ").must.throw(/^Invalid namespace name .*/);
+        });
+
+        it ('cannot use invalid namespaces', function() {
+            var validator = virgilio.util$.validateNamespaceName,
+                wrapper = function(path) {
+                    return function() {
+                        return validator(path);
+                    }
+                };
+
+            wrapper(".").must.throw(/^Invalid namespace name .*/);
+            wrapper("...").must.throw(/^Invalid namespace name .*/);
+            wrapper(".foo").must.throw(/^Invalid namespace name .*/);
+            wrapper("...foo").must.throw(/^Invalid namespace name .*/);
+            wrapper("foo.").must.throw(/^Invalid namespace name .*/);
+            wrapper("foo...").must.throw(/^Invalid namespace name .*/);
+            wrapper("foo...bar").must.throw(/^Invalid namespace name .*/);
+        });
+
+    });
+
     describe('Throws an error when called with wrong arguments', function() {
         var testCases = [
             [],
