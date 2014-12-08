@@ -45,10 +45,10 @@ describe('Virgilio.prototype.namespace$()', function() {
         it('can use valid namespace', function() {
             var validator = virgilio.util$.validateNamespaceName;
 
-            validator("foo.bar").must.be.true();
-            validator("foo.bar.baz").must.be.true();
-            validator("f.b").must.be.true();
-            validator("f.b.b").must.be.true();
+            validator('foo.bar').must.be.true();
+            validator('foo.bar.baz').must.be.true();
+            validator('f.b').must.be.true();
+            validator('f.b.b').must.be.true();
         });
 
         it('cannot be empty namespace', function() {
@@ -59,8 +59,8 @@ describe('Virgilio.prototype.namespace$()', function() {
                     }
                 };
 
-            wrapper("").must.throw(/^Invalid namespace name .*/);
-            wrapper(" ").must.throw(/^Invalid namespace name .*/);
+            wrapper('').must.throw(/^Invalid namespace name .*/);
+            wrapper(' ').must.throw(/^Invalid namespace name .*/);
         });
 
         it ('cannot use invalid namespaces', function() {
@@ -71,13 +71,13 @@ describe('Virgilio.prototype.namespace$()', function() {
                     }
                 };
 
-            wrapper(".").must.throw(/^Invalid namespace name .*/);
-            wrapper("...").must.throw(/^Invalid namespace name .*/);
-            wrapper(".foo").must.throw(/^Invalid namespace name .*/);
-            wrapper("...foo").must.throw(/^Invalid namespace name .*/);
-            wrapper("foo.").must.throw(/^Invalid namespace name .*/);
-            wrapper("foo...").must.throw(/^Invalid namespace name .*/);
-            wrapper("foo...bar").must.throw(/^Invalid namespace name .*/);
+            wrapper('.').must.throw(/^Invalid namespace name .*/);
+            wrapper('...').must.throw(/^Invalid namespace name .*/);
+            wrapper('.foo').must.throw(/^Invalid namespace name .*/);
+            wrapper('...foo').must.throw(/^Invalid namespace name .*/);
+            wrapper('foo.').must.throw(/^Invalid namespace name .*/);
+            wrapper('foo...').must.throw(/^Invalid namespace name .*/);
+            wrapper('foo...bar').must.throw(/^Invalid namespace name .*/);
         });
 
     });

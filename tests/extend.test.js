@@ -30,7 +30,7 @@ describe('Virgilio.prototype.extend$()', function() {
 
     it('Cannot override everything', function() {
         var illegalExtension = function() {
-            virgilio.extend$("foo", function(){} );
+            virgilio.extend$('foo', function(){} );
         };
         virgilio.namespace$('foo');
         illegalExtension.must.throw(virgilio.UnexpectedExtensionError);
@@ -39,7 +39,7 @@ describe('Virgilio.prototype.extend$()', function() {
 
     it('Cannot override non-prototype functions', function() {
         var illegalExtension = function() {
-            virgilio.extend$("foo", function(){} );
+            virgilio.extend$('foo', function(){} );
         };
         virgilio.foo = function() {};
         illegalExtension.must.throw(virgilio.UnexpectedExtensionError);
