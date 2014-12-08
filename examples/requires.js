@@ -1,6 +1,5 @@
 var Virgilio = require('../');
 var virgilio = new Virgilio();
-var assert = require('assert');
 
 // Testing the require with explicit name
 virgilio.shareRequire$('foo', module.exports.foo = function foo() {
@@ -22,4 +21,3 @@ virgilio.shareRequire$(module.exports.asd = function asd() {
 });
 var test3 = virgilio.require$.asd();
 console.log(test3); //=> 'asd'
-
