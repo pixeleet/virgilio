@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 var docco = require('gulp-docco');
-var jshint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var istanbul = require('gulp-istanbul');
 var vinylPaths = require('vinyl-paths');
 var exampleToTest = require('gulp-example-to-test');
@@ -25,6 +25,7 @@ var exampleTestHeader = fs.readFileSync('./helpers/example-test-header.js');
 
 gulp.task('test', function(callback) {
     runSequence(
+        'lint',
         'unit-tests',
         'example-tests',
         callback
@@ -98,8 +99,13 @@ gulp.task('docs', 'Build the documentation', function() {
         .pipe(gulp.dest('./documentation'));
 });
 
-gulp.task('lint', 'Execute JSHint checks on the code', function () {
-    gulp.src(['lib/**/*.js', 'examples/**/*.js'])
-        .pipe(jshint('.jshintrc'))
-        .pipe(jshint.reporter('jshint-stylish'));
+gulp.task('lint', 'Lint the code', function () {
+    return gulp.src([
+        'lib/**/*.js',
+        'examples/**/*.js',
+        '!examples/generators.js'
+    ])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
 });
