@@ -1,7 +1,4 @@
 {
-    "plugins": [
-        "nodeca"
-    ],
     "env": {
         "node": 2
     },
@@ -15,7 +12,6 @@
         "eqeqeq": 2,
         "guard-for-in": 2,
         "wrap-iife": 2,
-        "nodeca/indent": [2, "spaces", 4],
         "no-use-before-define": [2, "nofunc"],
         "new-cap": 2,
         "quotes": [2, "single"],
