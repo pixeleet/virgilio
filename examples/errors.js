@@ -4,8 +4,8 @@ var virgilio = new Virgilio();
 //Defining a simple error.
 virgilio.registerError$('FooError');
 var fooError = new virgilio.FooError('foo!');
-console.log(fooError.name);     //=> 'FooError'
-console.log(fooError.message);  //=> 'foo!'
+console.log(fooError.name);                     //=> 'FooError'
+console.log(fooError.message);                  //=> 'foo!'
 
 //Defining an error with a custom constructor.
 virgilio.registerError$(function DivideByZeroError(number) {

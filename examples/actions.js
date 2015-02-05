@@ -3,8 +3,9 @@ var virgilio = new Virgilio();
 var FRUITS = [ 'apple', 'pear', 'banana', 'melon' ];
 
 //Defining an action.
-virgilio.defineAction$('getFruit', function(fruitId) {
-    if (fruitId >= FRUITS.length) {
+virgilio.defineAction$(function getFruit(fruitId) {
+    var fruit = FRUITS[fruitId];
+    if (!fruit) {
         throw new Error('404 fruit not found');
     }
     return FRUITS[fruitId];

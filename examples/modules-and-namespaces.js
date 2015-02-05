@@ -5,7 +5,7 @@ var virgilio = new Virgilio();
 virgilio.namespace$('answers').loadModule$(myModule);
 function myModule() {
     var virgilio = this;
-    virgilio.defineAction$('ultimate', function() {
+    virgilio.defineAction$(function ultimate() {
         return 42;
     });
 }

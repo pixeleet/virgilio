@@ -5,7 +5,7 @@ var virgilio = new Virgilio();
 virgilio.loadModule$(myModule);
 function myModule() {
     var virgilio = this;
-    virgilio.defineAction$('answer', function() {
+    virgilio.defineAction$(function answer() {
         return 42;
     });
 }

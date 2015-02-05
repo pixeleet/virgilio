@@ -2,7 +2,7 @@ var Virgilio = require('../');
 var virgilio = new Virgilio();
 
 //Defining and calling a recursive action.
-virgilio.defineAction$('factorial', function(number) {
+virgilio.defineAction$(function factorial(number) {
     if (number <= 1) {
         return 1;
     }

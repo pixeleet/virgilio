@@ -2,15 +2,14 @@ var Virgilio = require('../');
 var virgilio = new Virgilio();
 
 //Defining actions on namespaces.
-virgilio.defineAction$('animal.human.speak', function() {
+virgilio.namespace$('animal.human').defineAction$(function speak() {
     return 'Hello world!';
 });
-virgilio.animal.defineAction$('eat', function(food) {
+virgilio.animal.defineAction$(function eat(food) {
     this.log$.info('Eating ' + food);
     return 'Om nom nom.';
 });
-virgilio.namespace$('plant').defineAction$('photosynthesis',
-                                            function(light) {
+virgilio.namespace$('plant').defineAction$(function photosynthesis(light) {
     return light ? 'C6H1206' : 'Zzzzzzz';
 });
 

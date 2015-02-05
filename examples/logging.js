@@ -14,7 +14,7 @@ var options = {
 var virgilio = new Virgilio(options);
 
 //Log a message from an action on a namespace.
-virgilio.defineAction$('parrot.talk', function(line) {
+virgilio.namespace$('parrot').defineAction$(function talk(line) {
     this.log$.info(line);
 });
 
