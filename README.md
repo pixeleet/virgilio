@@ -39,7 +39,7 @@ Then start defining actions.
 ```js
 Virgilio = require('virgilio');
 var virgilio = new Virgilio();
-virgilio.defineAction$('number.add', function add(num1, num2) {
+virgilio.namepsace$('number').defineAction$(function add(num1, num2) {
     return num1 + num2;
 });
 
