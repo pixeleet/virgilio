@@ -28,7 +28,6 @@ virgilio.animal.human.eat()
 //Calling an action on a sibling namespace fails.
 try {
     virgilio.animal.photosynthesis();
-}
-catch(err) {
+} catch(err) {
     console.log(err instanceof TypeError);  //=> true
 }
