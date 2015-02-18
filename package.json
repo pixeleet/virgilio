@@ -34,7 +34,7 @@
     "gulp": "^3.8.7",
     "gulp-docco": "0.0.4",
     "gulp-eslint": "^0.2.2",
-    "gulp-example-to-test": "^0.1.0",
+    "gulp-exemplary": "^1.0.0",
     "gulp-help": "^0.1.6",
     "gulp-insert": "^0.4.0",
     "gulp-istanbul": "^0.2.0",
