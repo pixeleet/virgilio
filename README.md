@@ -43,7 +43,7 @@ virgilio.namespace$('number').defineAction$(function add(num1, num2) {
     return num1 + num2;
 });
 
-Virgilio.number.add(3, 6).then(function(result) {
+virgilio.number.add(3, 6).then(function(result) {
     console.log(result);    //=> 9
 });
 ```
