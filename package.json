@@ -27,7 +27,7 @@
   "homepage": "https://github.com/icemobilelab/virgilio",
   "dependencies": {
     "bluebird": "^2.3.0",
-    "bunyan": "1.2.3",
+    "bunyan": "^1.8.10",
     "node-uuid": "^1.4.1"
   },
   "devDependencies": {
